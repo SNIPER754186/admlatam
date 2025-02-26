@@ -152,7 +152,7 @@ MENSAJE+=" =======================================\n"
 MENSAJE+=" IP : $USRIP <-> HORA : $_hora\n"
 MENSAJE+=" =======================================\n"
 MENSAJE+='       🔰 Bot generador de key 🔰\n'
-MENSAJE+='           ⚜ By @ChumoGH ⚜ \n'
+MENSAJE+='           ⚜ By LatamSRC v1 ⚜ \n'
 MENSAJE+=" =======================================\n"
 #curl -s -X POST $urlBOT -d chat_id=$ID -d text="$(echo -e "$MENSAJE")" &>/dev/null
 curl -s --max-time 10 -d "chat_id=$ID&disable_web_page_preview=1&text=$(echo -e "$MENSAJE")" $urlBOT &>/dev/null
