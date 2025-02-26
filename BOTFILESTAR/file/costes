@@ -1,0 +1,23 @@
+#!/bin/bash
+
+
+prices_on () {
+unset firsnme lastnme
+[[ -z ${callback_query_from_first_name} ]] && firsnme="${message_from_first_name}" || firsnme="${callback_query_from_first_name}"
+[[ -z ${callback_query_from_last_name} ]] && lastnme="${message_from_last_name}" || lastnme="${callback_query_from_last_name}"
+local msg
+[[ ! -e /etc/ADM-db/costos.url ]] && precios=$(curl -sSL "https://raw.githubusercontent.com/ChumoGH/ADMcgh/main/costos") || precios=$(curl -sSL "$(cat < /etc/ADM-db/costos.url)")
+#permited=$(curl -sSL "https://www.dropbox.com/scl/fi/lepsh05ux1uqrxto2tdkv/costos.txt?rlkey=ugnz1g849czeqxgusyjxdkzwl") 
+	msg=" =============================================\n"
+	msg+=" Hola, 『 ${firsnme} ${lastnme} 』 \n"
+	msg+=" =============================================\n"
+	msg+="  ${precios}"
+	msg+=" =============================================\n"
+	msg+="             ⚜ by @ChumoGH ⚜\n"
+	msg+=" =============================================\n"
+    ShellBot.sendMessage	--chat_id "${message_chat_id[$id]}" \
+							--reply_to_message_id "${message_message_id[$id]}" \
+							--text "<i>$(echo -e $msg)</i>" \
+							--parse_mode html
+return 0
+}

@@ -327,7 +327,7 @@ echo -e " 🛡️  𝙸𝚗𝚜𝚝𝚊𝚕𝚊𝚍𝚘𝚛  𝙾𝚏𝚒𝚌�
 #msg -bar3
 msg -bar3 && echo -ne "$(msg -verd "apt update -y &&") $(msg -aqua "apt upgrade -y;\n") "&& msg -bra "\033[7;49;35m wget -q https://raw.githubusercontent.com/ChumoGH/ScriptCGH/main/setup; chmod 777 setup; ./setup --install"
 msg -bar3
-[[ -e /etc/menu_numito ]] && menumito="$(cat /etc/menu_numito)" || menumito="https://t.me/ChumoGH_bot"
+[[ -e /etc/menu_numito ]] && menumito="$(cat /etc/menu_numito)" || menumito="https://t.me/LatamSRC"
 [[ -z $vkey ]] && vkey="@ChumoGH"
 echo -e " 🧬 Soporte : Ubuntu 18.04 - 24.04\n         𝙍𝙚𝙘𝙤𝙢𝙚𝙣𝙙𝙖𝙙𝙤 𝙐𝙗𝙪𝙣𝙩𝙪 18.04"
 echo -e " Verificada: $vkey 🛡️ 𝚁𝙴𝚂𝙴𝙻𝙻𝙴𝚁 𝙰𝚌𝚝𝚞𝚊𝚕 : $nomkey" | pv -qL 80

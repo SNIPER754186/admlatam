@@ -162,7 +162,7 @@ MENSAJE+="  HORA: $_hora <-> VIA INSTALL SSH\n"
 MENSAJE+=" =======================================\n"
 MENSAJE+='           ⚜ By @ChumoGH ⚜ \n'
 MENSAJE+=" =======================================\n"
-MENSAJE+='&reply_markup={"inline_keyboard":[[{"text":"NEW KEY","callback_data":"/keygen"},{"text":" SOPORTE ","url":"https://t.me/ChumoGH_ADM"}]]}'
+MENSAJE+='&reply_markup={"inline_keyboard":[[{"text":"NEW KEY","callback_data":"/keygen"},{"text":" SOPORTE ","url":"https://t.me/gatesccn"}]]}'
 #curl -s -X POST $urlBOT -d chat_id=$ID -d text="$(echo -e "$MENSAJE")" &>/dev/null
 #curl -s --max-time 10 -d "chat_id=$ID&disable_web_page_preview=1&text=$(echo -e "$MENSAJE")&parse_mode=html" $urlBOT &>/dev/null
 curl -s --max-time 10 -d "chat_id=$ID&disable_web_page_preview=1&text=$(echo -e "$MENSAJE")" ${urlBOT} &>/dev/null

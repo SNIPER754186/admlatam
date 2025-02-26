@@ -1,0 +1,417 @@
+#!/bin/bash
+# -*- ENCODING: UTF-8 -*-
+
+# verificacion primarias
+meu_ip_fun () {
+[[ ! -d /bin/ejecutar ]] && mkdir /bin/ejecutar
+if [[ -e /bin/ejecutar/IPcgh ]]; then
+    IP="$(cat /bin/ejecutar/IPcgh)"
+  else
+    MEU_IP=$(ip addr | grep 'inet' | grep -v inet6 | grep -vE '127\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | grep -o -E '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | head -1)
+    MEU_IP2=$(wget -qO- ipv4.icanhazip.com)
+    [[ "$MEU_IP" != "$MEU_IP2" ]] && IP="$MEU_IP2" && echo "$MEU_IP2" || IP="$MEU_IP" && echo "$MEU_IP"
+    echo "$MEU_IP2" > /bin/ejecutar/IPcgh
+	IP="$MEU_IP2"
+  fi
+}
+[[ -e /etc/newadm-instalacao ]] && BASICINST="$(cat /etc/newadm-instalacao)" || BASICINST="cabecalho menu_credito PPub.py payloads PDirect.py v-local.log PGet.py ultrahost menu POpen.py shadowsocks.sh PPriv.py -"
+BASICINSTAM="LATAMbot.sh menu.sh PDirect.py PGet.py POpen.py PPriv.py PPub.py message.txt"
+PLUSADM="menu header menu_credito v-local.log"
+
+SCPT_DIR="/etc/SCRIPT"
+SCPT_LTM="/etc/LTM"
+SCPT_PUS="/etc/PLUS"
+[[ ! -d ${SCPT_DIR} ]] && mkdir ${SCPT_DIR}
+[[ ! -d ${SCPT_LTM} ]] && mkdir ${SCPT_LTM}
+[[ ! -d ${SCPT_PUS} ]] && mkdir ${SCPT_PUS}
+INSTA_ARQUIVOS="ADMVPS.zip"
+DIR="/etc/http-shell"
+LIST="$(echo "NewVPS-" | rev)"
+LISTAM="lista-arq"
+[[ -e /etc/menu_ito ]] && nomkey="$(cat /etc/menu_ito)" || nomkey='@ChumoGH - OFFICIAL'
+
+gerar_key () {
+unset usrLOP nombrevalue nBot nBotSS
+local nombrevalue=''
+[[ -z ${nombrevalue} ]] && nombrevalue="${message_from_id}" 
+[[ -z ${nombrevalue} ]] && nombrevalue="${callback_query_from_id}"
+[[ -z ${callback_query_from_username} ]] && local usrLOP=${message_from_username} || local usrLOP=${callback_query_from_username}
+#[[ -z ${usrLOP} ]] && LIST="$(echo "NewVPS-" | rev)" || LIST="$(echo "${usrLOP}-" | rev)"
+numkey_gen=$(grep -o -i $nombrevalue /etc/ADM-db/num-key.cont | wc -l)
+local limcont=$(cat /etc/ADM-db/limit) 
+[[ "$limcont" -ge "998" ]] && limted="∞" || limted=$(cat /etc/ADM-db/limit)
+[[ "$(( $limcont - $numkey_gen ))" -ge "900" ]] && credres="∞" || credres=$(( $limcont - $numkey_gen))
+meu_ip_fun
+local firsnme=''
+local lastnme=''
+local nombrevalue=''
+[[ -z ${nombrevalue} ]] && nombrevalue="${message_from_id}" 
+[[ -z ${nombrevalue} ]] && nombrevalue="${callback_query_from_id}"
+[[ -z ${callback_query_from_first_name} ]] && firsnme="${message_from_first_name}" || firsnme="${callback_query_from_first_name}"
+[[ -z ${callback_query_from_last_name} ]] && lastnme="${message_from_last_name}" || lastnme="${callback_query_from_last_name}"
+[[ -z $nBot ]] && nBot=$(ShellBot.username)
+#[[ -e ${CIDdir}/ress ]] && echo $nomkey > ${SCPT_DIR}/menu_credito || echo -e "${firsnme} ${lastnme}" > ${SCPT_DIR}/menu_credito
+#echo -e "${nombrevalue}" >> ${SCPT_DIR}/menu_credito
+#local adminV="$(less ${SCPT_DIR}/menu_credito |head -1)";
+local adminV="${firsnme} ${lastnme}";
+local valuekey="$(echo $RANDOM | md5sum | head -c 15)"
+local oUP=${IP}
+fun_list "$valuekey" '4'
+local keyfinal="$(ofus "$oUP:8888/${valuekey}/$LIST")"
+#local bot_retorno=" ═--💻  𝙎 𝘾 𝙍 𝙄 𝙋 𝙏  |  𝘾𝙝𝙪𝙢𝙤𝙂𝙃|𝘼𝘿𝙈   💻  --═\n" #--------------------------------------------------------------------------------------
+local bot_retorno=" $LINE\n"  #--------------------------------------------------------------------------------------
+#   🚫 Sin TU RESELLER EN LA KEY 🚫\n
+[[ -z ${message_chat_tittle} ]] && grupCHAT="" || grupCHAT="ChatID : ${chatuser} "
+#bot_retorno+="  KEY { $numkey_gen } DE @${usrLOP} con ID: ${nombrevalue} $grupCHAT \n ⚠️ VENCE EN 1 HORA O AL SER USADA ⚠️\n"
+[[ -z ${usrLOP} ]] && bot_retorno+=" 🪧 USUARIO SIN ALIAS CON ID: ⚠️ADVERTIDO⚠️ \n  ⚠️ KEY VENCE EN 4 HORAS O AL USARLA ⚠️\n ⚠️\n" || bot_retorno+="  KEY { $numkey_gen } DE @${usrLOP} con ID: <tg-spoiler>${nombrevalue}</tg-spoiler> $grupCHAT \n ⚠️ VENCE EN 4 HORAS O AL SER USADA ⚠️\n"
+bot_retorno+="$LINE\n"
+bot_retorno+=" 🛡️ SloganKEY 🛡️ : ${adminV}\n"
+bot_retorno+="$LINE\n"
+bot_retorno+=" 🗝️ <code>${keyfinal}</code> 🗝️\n"
+bot_retorno+="$LINE\n"
+bot_retorno+="  🛡️  𝙸𝚗𝚜𝚝𝚊𝚕𝚊𝚍𝚘𝚛 𝙾𝚏𝚒𝚌𝚒𝚊𝚕 $(cat < /etc/SCRIPT/v-local.log) 🔐 \n"
+bot_retorno+="$LINE\n"
+#bot_retorno+='<code>apt update -y; apt upgrade -y; wget -q https://plus.admcgh.site/setup; chmod 777 setup; ./setup --ADMcgh</code>\n'
+bot_retorno+='<code>apt update -y; apt upgrade -y; wget -q https://raw.githubusercontent.com/ChumoGH/ScriptCGH/main/setup; chmod 777 setup; ./setup --ADMcgh</code>\n'
+bot_retorno+="$LINE\n"
+bot_retorno+="     𝙍𝙚𝙘𝙤𝙢𝙚𝙣𝙙𝙖𝙙𝙤 𝙐𝙗𝙪𝙣𝙩𝙪 20.04 LTS \n   🧬🧬 S.O Ubuntu 18.04 a 24.04 X64(x86|ARM) 🧬🧬 \n          Debian 8 a 12 (x64) \n  🪦 ACCESOS OFICIALES CON @${nBot} 🛡️⚔️\n"
+bot_retorno+="$LINE\n"
+call.keygen "${bot_retorno}"
+#msj_fun
+bot_file+="  🛡️  𝙸𝚗𝚜𝚝𝚊𝚕𝚊𝚍𝚘𝚛  𝙾𝚏𝚒𝚌𝚒𝚊𝚕 $(cat < /etc/SCRIPT/v-local.log) 🛡️ \n\n"
+bot_file+="apt update -y && apt upgrade -y && wget -q https://plus.admcgh.site/setup && chmod +x setup && ./setup --ADMcgh\n\n"
+#bot_file+="apt update -y && apt upgrade -y && wget -q https://raw.githubusercontent.com/ChumoGH/ScriptCGH/main/setup && chmod +x setup && ./setup --ADMcgh\n\n"
+bot_file+="  ${keyfinal} \n"
+#ShellBot.pinChatMessage --chat_id "${chatuser}" --message_id "${return[message_id]}"
+#ShellBot.deleteMessage --chat_id "${chatuser}" --message_id ${message_pinned_message_from_id}
+#ShellBot.deleteMessage --chat_id "${chatuser}" --message_id ${message_message_id}
+#echo -e ${bot_file} > ${keytxt}/key_${usrLOP}.txt
+#upfile_fun ${keytxt}/key_${usrLOP}.txt
+#rm ${keytxt}/key_${usrLOP}.txt
+}
+
+gerar_plus () {
+unset usrLOP nombrevalue nBot nBotSS
+[[ -z ${nombrevalue} ]] && nombrevalue="${message_from_id}" 
+[[ -z ${nombrevalue} ]] && nombrevalue="${callback_query_from_id}"
+[[ -z ${callback_query_from_username} ]] && usrLOP=${message_from_username} || usrLOP=${callback_query_from_username}
+#[[ -z ${usrLOP} ]] && LIST="$(echo "NewVPS-" | rev)" || LIST="$(echo "${usrLOP}-" | rev)"
+numkey_gen=$(grep -o -i $nombrevalue /etc/ADM-db/num-key.cont | wc -l)
+limcont=$(cat /etc/ADM-db/limit) 
+[[ "$limcont" -ge "998" ]] && limted="∞" || limted=$(cat /etc/ADM-db/limit)
+[[ "$(( $limcont - $numkey_gen ))" -ge "900" ]] && credres="∞" || credres=$(( $limcont - $numkey_gen))
+meu_ip_fun
+[[ -z ${callback_query_from_first_name} ]] && firsnme="${message_from_first_name}" || firsnme="${callback_query_from_first_name}"
+[[ -z ${callback_query_from_last_name} ]] && lastnme="${message_from_last_name}" || lastnme="${callback_query_from_last_name}"
+[[ -z $nBot ]] && nBot=$(ShellBot.username)
+[[ -e ${CIDdir}/ress ]] && echo $nomkey > ${SCPT_PUS}/menu_credito || echo -e "${firsnme} ${lastnme}" > ${SCPT_PUS}/menu_credito
+echo -e "${nombrevalue}" >> ${SCPT_PUS}/menu_credito
+adminV="$(less ${SCPT_PUS}/menu_credito |head -1)";
+valuekey="$(echo $RANDOM | md5sum | head -c 15)"
+oUP=${IP}
+fun_plus "$valuekey"
+keyfinal="$(ofus "$oUP:8888/${valuekey}/$LIST")"
+local bot_retorno=" ═--💻  𝙎 𝘾 𝙍 𝙄 𝙋 𝙏  |  𝘾𝙝𝙪𝙢𝙤𝙂𝙃|𝘼𝘿𝙈   💻  --═\n" #--------------------------------------------------------------------------------------
+local bot_retorno+=" $LINE\n"  #--------------------------------------------------------------------------------------
+#   🚫 Sin TU RESELLER EN LA KEY 🚫\n
+[[ -z ${message_chat_tittle} ]] && grupCHAT="" || grupCHAT="ChatID : ${chatuser} "
+#bot_retorno+="  KEY { $numkey_gen } DE @${usrLOP} con ID: ${nombrevalue} $grupCHAT \n ⚠️ VENCE EN 1 HORA O AL SER USADA ⚠️\n"
+[[ -z ${usrLOP} ]] && bot_retorno+=" 🪧 USUARIO SIN ALIAS CON ID: ⚠️ADVERTIDO⚠️ \n  ⚠️ KEY VENCE EN 4 HORAS O AL USARLA ⚠️\n ⚠️\n" || bot_retorno+="  KEY { $numkey_gen } DE @${usrLOP} con ID: <tg-spoiler>${nombrevalue}</tg-spoiler> $grupCHAT \n ⚠️ VENCE EN 4 HORAS O AL SER USADA ⚠️\n"
+bot_retorno+="$LINE\n"
+bot_retorno+=" 🛡️ 𝚁𝙴𝚂𝙴𝙻𝙻𝙴𝚁 🛡️ : ${adminV}\n"
+bot_retorno+="$LINE\n"
+bot_retorno+=" 🗝️  <code>${keyfinal}</code> 🗝️\n"
+bot_retorno+="$LINE\n"
+bot_retorno+="  🛡️  𝙸𝚗𝚜𝚝𝚊𝚕𝚊𝚍𝚘𝚛  𝙾𝚏𝚒𝚌𝚒𝚊𝚕 $(cat < /etc/SCRIPT/v-local.log) 🔐 \n"
+bot_retorno+="$LINE\n"
+bot_retorno+='<code>apt update -y; apt upgrade -y; wget -q -O setup https://www.dropbox.com/scl/fi/u6ms2a4edrnjvu1x3irk3/setup.sh?rlkey=wrpjwjud3hc9frrerize7n3y1; chmod 777 setup; ./setup --ADMcgh</code>\n'
+bot_retorno+="$LINE\n"
+bot_retorno+="     𝙍𝙚𝙘𝙤𝙢𝙚𝙣𝙙𝙖𝙙𝙤 𝙐𝙗𝙪𝙣𝙩𝙪 18.04 \n   🧬🧬 S.O Ubuntu 18.04 a 22.04 X64(x86|ARM) 🧬🧬 \n          Debian 8,9,10,11 (x64) \n  🪦 ACCESOS OFICIALES CON @${nBot} 🛡️⚔️\n"
+bot_retorno+="$LINE\n"
+msj_fun
+bot_file+="  🛡️  𝙸𝚗𝚜𝚝𝚊𝚕𝚊𝚍𝚘𝚛  𝙾𝚏𝚒𝚌𝚒𝚊𝚕 $(cat < /etc/SCRIPT/v-local.log) 🛡️ \n\n"
+bot_file+="apt update -y && apt upgrade -y && wget -q https://raw.githubusercontent.com/ChumoGH/ScriptCGH/main/setup && chmod +x setup && ./setup --ADMcgh\n\n"
+bot_file+="  ${keyfinal} \n"
+echo -e ${bot_file} > ${keytxt}/key_${usrLOP}.txt
+upfile_fun ${keytxt}/key_${usrLOP}.txt
+rm ${keytxt}/key_${usrLOP}.txt
+}
+
+gerar_keyLTM(){ 
+local nombrevalue
+local usrLOP
+MSG_id=$((${message_message_id} + 1 ))
+[[ -z ${nombrevalue} ]] && nombrevalue="${message_from_id}" 
+[[ -z ${nombrevalue} ]] && nombrevalue="${callback_query_from_id}"
+[[ -z ${callback_query_from_username} ]] && usrLOP=${message_from_username} || usrLOP=${callback_query_from_username}
+#[[ $(cat /etc/ADM-db/User-ID | grep -w ${nombrevalue} | cut -d '|' -f3) = "true" ]] && gerar_key2 || 
+gerar_key2 
+				#[[ -e $HOME/RegBOT/${nombrevalue}.permited ]] && gerar_key2 || {
+				#MSG_id=$((${message_message_id} + 1 ))
+				#local bot_retorno="\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ \n"
+				#bot_retorno+="ㅤVERIFICANDO MEMBRESIA !!\n\n  PORFAVOR ESPERA MIENTRAS SE VALIDA!! \n" 
+				#bot_retorno+="\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ \n"
+				#msj_fun
+				#sleep 1s
+				#msj_del ${message_message_id}
+				#msj_del ${MSG_id}
+				#MSG_id=$((${message_message_id} + 1 ))
+				#local bot_retorno="\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ \n"
+				#bot_retorno+="ㅤFELICIDADES !! UD TIENE AUTORIZACION EXTRA\n\n VUELVE  UTILIZAR EL COMANDO LIBREMENTE\n" 
+				#bot_retorno+="\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ \n"
+				#msj_fun
+				#sleep 1s
+				#msj_del ${message_message_id}
+				#msj_del ${MSG_id}
+				#echo "${nombrevalue}" > $HOME/RegBOT/${nombrevalue}.permited
+				#return
+				#}
+			#} || {
+			#	local bot_retorno="ㅤESTA FUNCION FUE REMIVIDA\n\n"  #--------------------------------------------------------------------------------------
+				#bot_retorno+=" ESTA FUNCION ESTA LIMITADA \n\n"
+				#bot_retorno+="❗️ PARA GENERAR ESTAS KEYS ❗️\n\n"
+				#bot_retorno+="⚙️ SOLICITA DUAL GEN LIMITE\n\n"
+				#msj_fun
+				#sleep 5s
+				#msj_del ${message_message_id}
+				#msj_del ${MSG_id}
+			#}
+	#} || gerar_key2
+}
+
+gerar_key2 () {
+unset usrLOP nombrevalue nBot nBotSS
+[[ -z ${nombrevalue} ]] && nombrevalue="${message_from_id}" 
+[[ -z ${nombrevalue} ]] && nombrevalue="${callback_query_from_id}"
+[[ -z ${callback_query_from_username} ]] && usrLOP=${message_from_username} || usrLOP=${callback_query_from_username}
+numkey_gen=$(grep -o -i $nombrevalue /etc/ADM-db/LTM-key.cont | wc -l)
+[[ $(cat /etc/ADM-db/User-ID | grep -w ${nombrevalue} | cut -d '|' -f3) = "true" ]] || limcont='3'
+#limcont=$(cat /etc/ADM-db/limit) 
+[[ "$limcont" -ge "998" ]] && limted="∞" || limted=${limcont}
+[[ "$(( $limcont - $numkey_gen ))" -ge "900" ]] && credres="∞" || credres=$(( $limcont - $numkey_gen))
+[[ "${credres}" -le "0" ]] && {
+			MSG_id=$((${message_message_id} + 1 ))
+			local bot_retorno="ㅤUD ALCANZO SU LIMITE DE KEYS DUAL\n"  #--------------------------------------------------------------------------------------
+			bot_retorno+=" ESTA FUNCION ESTA LIMITADA A ${credres} \n\n"
+			#bot_retorno+=" 🚫 OOOH!, @${callback_query_from_username} con ID:$nombrevalue ‼️\n Tus Creditos se han Agotado \n"
+			bot_retorno+="  TUS CREDITOS PERMITIDOS :『 ${limcont} 』, 𝙆𝙚𝙮𝙨 𝙂𝙚𝙣𝙚𝙧𝙖𝙙𝙖𝙨『 $numkey_gen 』🗝️\n"
+			bot_retorno+="$LINE\n"
+			bot_retorno+=" ❗️ PARA GENERAR ESTAS KEYS ❗️\n"
+			bot_retorno+="⚙️ SOLICITA DUAL GEN SIN LIMITE\n\n"
+			msj_fun
+			sleep 4s
+			msj_del ${message_message_id}
+			msj_del ${MSG_id}
+return
+}
+meu_ip_fun
+[[ -z ${callback_query_from_first_name} ]] && firsnme="${message_from_first_name}" || firsnme="${callback_query_from_first_name}"
+[[ -z ${callback_query_from_last_name} ]] && lastnme="${message_from_last_name}" || lastnme="${callback_query_from_last_name}"
+[[ -z $nBot ]] && nBot=$(ShellBot.username)
+[[ -e ${CIDdir}/ress ]] && echo $nomkey > ${SCPT_LTM}/message.txt || echo -e "${firsnme} ${lastnme}" > ${SCPT_LTM}/message.txt
+echo -e "${nombrevalue}" >> ${SCPT_LTM}/message.txt
+adminV="$(less ${SCPT_LTM}/message.txt |head -1)";
+valuekey="$(echo $RANDOM | md5sum | head -c 15)"
+oUP=${IP}
+fun_listLTM "$valuekey"
+keyfinal="$(ofusLTM "$oUP:8888/${valuekey}/${LISTAM}")"
+local bot_retorno="ㅤ• 💥 ─━─━ KEY - LATAM v2.0 ━─━─ 💥 •\n\n"  #--------------------------------------------------------------------------------------
+bot_retorno+=" 👤 Slogan: ${adminV} \n\n"
+bot_retorno+="❗️ Actuliza tu Sistema Primero ❗️\n\n"
+bot_retorno+="⚙️ Comando Para Actulizar:\n\n"
+bot_retorno+="<code> apt update; apt upgrade -y; </code>\n\n"
+bot_retorno+=" INSTALADOR MOD LATAM (2.0)  \n\n"
+bot_retorno+='<code>wget -q https://raw.githubusercontent.com/ChumoGH/ADMcgh/main/Instalador/GPT/setup; chmod 777 setup; ./setup --start</code>\n\n'
+#bot_retorno+='<code>wget -q https://www.dropbox.com/s/dqhpsv7i702aj0s/install.sh; chmod 777 install.sh; ./install.sh --start</code>\n\n'
+bot_retorno+="🔑 Key: (Valida por solo 1 hora) \n\n"
+bot_retorno+=" <code>${keyfinal}</code> \n\n"
+#bot_retorno+=" <code>KEY REMOVIDAS DURANTE EL UPDATE</code> \n\n"
+bot_retorno+="👀 Key Generadas en 24hrs: [ ${credres}/${limted} ] \n\n"
+bot_retorno+="📀 Ubuntu: 20.04 LTS ¡Recomendado! \n\n"
+bot_retorno+="ㅤㅤ• 💥 ─━─━─━─━─━─━─━─━─━─━─ 💥 •ㅤ\n  🪦 ADQUIERE TU ACCESO DESDE @${nBot} 🛡️⚔️\n"
+msj_fun
+}
+
+fun_list () {
+local KEY="$1"
+local time="$2"
+local RESELL="$3"
+[[ -z ${time} ]] && time='4'
+rm ${SCPT_DIR}/*.x.c &> /dev/null
+#CRIA DIR
+[[ ! -e ${DIR} ]] && mkdir ${DIR}
+#ENVIA ARQS
+i=0
+VALUE+="$BASICINST"
+for arqx in `ls ${SCPT_DIR}`; do
+[[ $(echo $VALUE|grep -w "${arqx}") ]] && continue 
+echo -e "[$i] -> ${arqx}"
+arq_list[$i]="${arqx}"
+let i++
+done
+#CRIA KEY
+[[ ! -e ${DIR}/${KEY} ]] && mkdir ${DIR}/${KEY}
+#PASSA ARQS 
+[[ "$(grep -o -i $nombrevalue /etc/ADM-db/num-key.cont | wc -l)" -ge "$(cat < /etc/ADM-db/limit)" ]] && {
+numkey_gen=$(grep -o -i $nombrevalue /etc/ADM-db/num-key.cont | wc -l)
+local bot_retorno="$LINE\n"
+bot_retorno+=" 🚫 OOOH!, @${callback_query_from_username} con ID:$nombrevalue ‼️\n Tus Creditos se han Agotado \n"
+bot_retorno+="  TUS CREDITOS PERMITIDOS :『 $(cat < /etc/ADM-db/limit) 』, 𝙆𝙚𝙮𝙨 𝙂𝙚𝙣𝙚𝙧𝙖𝙙𝙖𝙨『 $numkey_gen 』🗝️\n"
+bot_retorno+="$LINE\n"
+bot_retorno+=" Si deseas Usar el Generador sin Limite , Contacta con $(cat < /etc/ADM-db/resell)\n"
+bot_retorno+=" Recuerda que Todo Esfuerzo Vale, Solicita Acceso \n"
+bot_retorno+=" 𝙍𝙚𝙘𝙤𝙢𝙚𝙣𝙙𝙖𝙙𝙤 𝙐𝙗𝙪𝙣𝙩𝙪 18.04 \n   🧬🧬 S.O Ubuntu 16,18,20 X64(x86|ARM) 🧬🧬 \n          Debian 7,8,9,10 (x64) \n  🪦 ADQUIERE TU ACCESO EN @${nBot} 🛡️⚔️\n"
+bot_retorno+=" 🔐 𝙆𝙚𝙮𝙨 𝙐𝙨𝙖𝙙𝙖𝙨『 $(grep -o -i $nombrevalue /etc/gerar-sh-log | wc -l) 』 🔓, 𝘒𝘦𝘺𝘴 𝘈𝘤𝘵𝘪𝘷𝘢𝘴 『 $(ls /etc/http-shell/ | grep name | wc -l) 』 🗝️ \n"
+bot_retorno+="$LINE\n"
+msj_fun
+exit
+}
+echo "$nombrevalue" >> /etc/ADM-db/num-key.cont
+numkey_used=$(grep -o -i $nombrevalue /etc/gerar-sh-log | wc -l)
+numkey_gen=$(grep -o -i $nombrevalue /etc/ADM-db/num-key.cont | wc -l)
+#ADM BASIC
+arqslist="$BASICINST"
+for arqx in `echo "${arqslist}"`; do
+[[ -e ${DIR}/${KEY}/$arqx ]] && continue #ANULA ARQUIVO CASO EXISTA
+cp ${SCPT_DIR}/$arqx ${DIR}/${KEY}/
+echo "$arqx" >> ${DIR}/${KEY}/${LIST}
+done
+echo -e "${firsnme} ${lastnme}" > ${DIR}/${KEY}/menu_credito
+[[ ${RESELL} = 'FREE' ]] && {
+#echo -e "ＣｈｕｍｏＧＨ ™ 𑲭𑲭 ° FREE\n$(cat < /etc/ADM-db/Admin-ID|head -1)" > ${SCPT_DIR}/menu_credito
+echo -e "ＣｈｕｍｏＧＨ ™ 𑲭𑲭 ° FREE\n${permited}" > ${DIR}/${KEY}/menu_credito
+} || echo -e "${nombrevalue}" >> ${DIR}/${KEY}/menu_credito
+#rm ${SCPT_DIR}/*.x.c &> /dev/null
+_post="$(ps aux | grep MultiBot | grep -v grep | cut -d '@' -f2)"
+[[ -z ${alias_admin} ]] && _adm=$(cat /etc/ADM-db/resell) || _adm=${alias_admin}
+echo -e "${_adm}|${bot_token}|@$(ShellBot.username)" >> ${DIR}/${KEY}/cabecalho
+echo "$nombrevalue" > ${DIR}/${KEY}.name
+[[ ! -z $IPFIX ]] && echo "$IPFIX" > ${DIR}/${KEY}/keyfixa
+#&& curl -s -X POST $urlBOT -d chat_id=$nombrevalue -d text="$(echo -e "$MENSAJE")" &>/dev/null
+if [[ $time -gt '0' ]]; then
+		at now +$time hours <<< "rm -rf ${DIR}/${KEY} && rm -f ${DIR}/${KEY}.name"
+fi
+}
+
+fun_plus () {
+rm ${SCPT_PUS}/*.x.c &> /dev/null
+unset KEY
+KEY="$1"
+#CRIA DIR
+[[ ! -e ${DIR} ]] && mkdir ${DIR}
+#ENVIA ARQS
+i=0
+VALUE+="${PLUSADM}"
+for arqx in `ls ${SCPT_PUS}`; do
+[[ $(echo $VALUE|grep -w "${arqx}") ]] && continue 
+echo -e "[$i] -> ${arqx}"
+arq_list[$i]="${arqx}"
+let i++
+done
+#CRIA KEY
+[[ ! -e ${DIR}/${KEY} ]] && mkdir ${DIR}/${KEY}
+#PASSA ARQS 
+unset nombrevalue
+[[ -z ${nombrevalue} ]] && nombrevalue="${message_from_id}" 
+[[ -z ${nombrevalue} ]] && nombrevalue="${callback_query_from_id}"
+[[ "$(grep -o -i $nombrevalue /etc/ADM-db/num-key.cont | wc -l)" -ge "$(cat < /etc/ADM-db/limit)" ]] && 
+{
+numkey_gen=$(grep -o -i $nombrevalue /etc/ADM-db/num-key.cont | wc -l)
+local bot_retorno="$LINE\n"
+bot_retorno+=" 🚫 OOOH!, @${callback_query_from_username} con ID:$nombrevalue ‼️\n Tus Creditos se han Agotado \n"
+bot_retorno+="  TUS CREDITOS PERMITIDOS :『 $(cat < /etc/ADM-db/limit) 』, 𝙆𝙚𝙮𝙨 𝙂𝙚𝙣𝙚𝙧𝙖𝙙𝙖𝙨『 $numkey_gen 』🗝️\n"
+bot_retorno+="$LINE\n"
+bot_retorno+=" Si deseas Usar el Generador sin Limite , Contacta con $(cat < /etc/ADM-db/resell)\n"
+bot_retorno+=" Recuerda que Todo Esfuerzo Vale, Solicita Acceso \n"
+bot_retorno+=" 𝙍𝙚𝙘𝙤𝙢𝙚𝙣𝙙𝙖𝙙𝙤 𝙐𝙗𝙪𝙣𝙩𝙪 18.04 \n   🧬🧬 S.O Ubuntu 16,18,20 X64(x86|ARM) 🧬🧬 \n          Debian 7,8,9,10 (x64) \n  🪦 ADQUIERE TU ACCESO EN @${nBot} 🛡️⚔️\n"
+bot_retorno+=" 🔐 𝙆𝙚𝙮𝙨 𝙐𝙨𝙖𝙙𝙖𝙨『 $(grep -o -i $nombrevalue /etc/gerar-sh-log | wc -l) 』 🔓, 𝘒𝘦𝘺𝘴 𝘈𝘤𝘵𝘪𝘷𝘢𝘴 『 $(ls /etc/http-shell/ | grep name | wc -l) 』 🗝️ \n"
+bot_retorno+="$LINE\n"
+msj_fun
+exit
+} ||
+echo "$nombrevalue" >> /etc/ADM-db/num-key.cont
+numkey_used=$(grep -o -i $nombrevalue /etc/gerar-sh-log | wc -l)
+numkey_gen=$(grep -o -i $nombrevalue /etc/ADM-db/num-key.cont | wc -l)
+#ADM BASIC
+arqslist="$PLUSADM"
+for arqx in `echo "${arqslist}"`; do
+[[ -e ${DIR}/${KEY}/$arqx ]] && continue #ANULA ARQUIVO CASO EXISTA
+cp ${SCPT_PUS}/$arqx ${DIR}/${KEY}/
+echo "$arqx" >> ${DIR}/${KEY}/${LIST}
+done
+rm ${SCPT_PUS}/*.x.c &> /dev/null
+echo "$nombrevalue" > ${DIR}/${KEY}.name
+[[ ! -z $IPFIX ]] && echo "$IPFIX" > ${DIR}/${KEY}/keyfixa
+_hora=$(printf '%(%D-%H:%M:%S)T') 
+TOKEN="$(cat /etc/ADM-db/token)"
+urlBOT="https://api.telegram.org/bot$TOKEN/sendMessage"
+MENSAJE=" ••••📩𝙈𝙀𝙉𝙎𝘼𝙅𝙀 𝙍𝙀𝘾𝙄𝘽𝙄𝘿𝙊📩••••\n"
+MENSAJE+=" KEY : ${keyfinal} \n"
+MENSAJE+=" CADUCADA : $_hora\n"
+MENSAJE+=" ••••••••••••••••••••••••••••••••••••••••••••••••\n"
+MENSAJE+='       🔰 Bot generador de key 🔰\n'
+MENSAJE+='           ⚜ By @ChumoGH ⚜ \n'
+MENSAJE+=" ••••••••••••••••••••••••••••••••••••••••••••••••\n"
+#&& curl -s -X POST $urlBOT -d chat_id=$nombrevalue -d text="$(echo -e "$MENSAJE")" &>/dev/null
+at now +4 hours <<< "rm -rf ${DIR}/${KEY} && rm -f ${DIR}/${KEY}.name"
+}
+
+fun_listLTM () {
+rm ${SCPT_LTM}/*.x.c &> /dev/null
+unset KEY
+KEY="$1"
+#CRIA DIR
+[[ ! -d ${DIR} ]] && mkdir ${DIR}
+#ENVIA ARQS
+i=0
+VALUE+="$BASICINSTAM"
+for arqx in `ls ${SCPT_LTM}`; do
+[[ $(echo $VALUE|grep -w "${arqx}") ]] && continue 
+echo -e "[$i] -> ${arqx}"
+arq_list[$i]="${arqx}"
+let i++
+done
+#CRIA KEY
+[[ ! -e ${DIR}/${KEY} ]] && mkdir ${DIR}/${KEY}
+#PASSA ARQS 
+unset nombrevalue
+[[ -z ${nombrevalue} ]] && nombrevalue="${message_from_id}" 
+[[ -z ${nombrevalue} ]] && nombrevalue="${callback_query_from_id}"
+#ADM BASIC
+arqslist="$BASICINSTAM"
+for arqx in `echo "${arqslist}"`; do
+[[ -e ${DIR}/${KEY}/$arqx ]] && continue #ANULA ARQUIVO CASO EXISTA
+cp ${SCPT_LTM}/$arqx ${DIR}/${KEY}/
+echo "$arqx" >> ${DIR}/${KEY}/${LISTAM}
+done
+rm ${SCPT_LTM}/*.x.c &> /dev/null
+echo "$nombrevalue" > ${DIR}/${KEY}.name
+echo "$nombrevalue" >> /etc/ADM-db/LTM-key.cont
+at now +1 hours <<< "rm -rf ${DIR}/${KEY} && rm -f ${DIR}/${KEY}.name"
+}
+
+ofus () {
+unset server
+server=$(echo ${txt_ofuscatw}|cut -d':' -f1)
+unset txtofus
+number=$(expr length $1)
+for((i=1; i<$number+1; i++)); do
+txt[$i]=$(echo "$1" | cut -b $i)
+case ${txt[$i]} in
+".")txt[$i]="x";;
+"x")txt[$i]=".";;
+"5")txt[$i]="s";;
+"s")txt[$i]="5";;
+"1")txt[$i]="@";;
+"@")txt[$i]="1";;
+"2")txt[$i]="?";;
+"?")txt[$i]="2";;
+"4")txt[$i]="0";;
+"0")txt[$i]="4";;
+"/")txt[$i]="K";;
+"K")txt[$i]="/";;
+esac
+txtofus+="${txt[$i]}"
+done
+echo "$txtofus" | rev
+}
