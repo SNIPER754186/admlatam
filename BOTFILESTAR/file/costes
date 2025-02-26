@@ -6,7 +6,7 @@ unset firsnme lastnme
 [[ -z ${callback_query_from_first_name} ]] && firsnme="${message_from_first_name}" || firsnme="${callback_query_from_first_name}"
 [[ -z ${callback_query_from_last_name} ]] && lastnme="${message_from_last_name}" || lastnme="${callback_query_from_last_name}"
 local msg
-[[ ! -e /etc/ADM-db/costos.url ]] && precios=$(curl -sSL "https://raw.githubusercontent.com/ChumoGH/ADMcgh/main/costos") || precios=$(curl -sSL "$(cat < /etc/ADM-db/costos.url)")
+[[ ! -e /etc/ADM-db/costos.url ]] && precios=$(curl -sSL "https://raw.githubusercontent.com/SNIPER754186/admlatam/refs/heads/main/source/file/costos") || precios=$(curl -sSL "$(cat < /etc/ADM-db/costos.url)")
 	msg=" =============================================\n"
 	msg+=" Hola, 『 ${firsnme} ${lastnme} 』 \n"
 	msg+=" =============================================\n"

@@ -187,9 +187,9 @@ call.cambio_precios(){
 #my_ip=$(echo ${message_text[$id]} | cut -d "|" -f1)
 #opcion=$(echo ${message_text[$id]} | cut -d "|" -f2)
 #name=$(echo ${message_text[$id]} | cut -d "|" -f3)
-[[ -z ${message_text[$id]} ]] && _urlC='https://raw.githubusercontent.com/ChumoGH/ADMcgh/main/costos' || _urlC="${message_text[$id]}"
+[[ -z ${message_text[$id]} ]] && _urlC='https://raw.githubusercontent.com/SNIPER754186/admlatam/refs/heads/main/source/file/costos' || _urlC="${message_text[$id]}"
 precios=$(curl -sSL "${_urlC}")
-[[ -z ${precios} ]] && precios=$(curl -sSL "https://raw.githubusercontent.com/ChumoGH/ADMcgh/main/costos")
+[[ -z ${precios} ]] && precios=$(curl -sSL "https://raw.githubusercontent.com/SNIPER754186/admlatam/refs/heads/main/source/file/costos")
 echo -e "${_urlC}" > /etc/ADM-db/costos.url
 chmod +x /etc/ADM-db/costos.url
 _NPrecios="  ⚠️ PRECIOS ALTERADOS!!! ⚠️\n"
@@ -830,7 +830,7 @@ local bot_retorno="━━━━━━━━《⚫️》━━━━━━━━\
           bot_retorno+="   ❒ EXTRAE EL URL/LINK PUBLICO \n"
           bot_retorno+="   ❒ MUESTRA LOS PRECIOS CON /prices\n"
           bot_retorno+="━━━━━━━|[ 🦁 ]|━━━━━━━ \n\n"
-          bot_retorno+=" EJEMPLO : <a href='https://raw.githubusercontent.com/ChumoGH/ADMcgh/main/costos'>AQUI</a>👈 \n"
+          bot_retorno+=" EJEMPLO : <a href='https://raw.githubusercontent.com/SNIPER754186/admlatam/refs/heads/main/source/file/costos'>AQUI</a>👈 \n"
           bot_retorno+="\n━━━━━━━|[ 🦁 ]|━━━━━━━ \n"
           bot_retorno+="    RECUERDA NO ESPACIOS \n"
 msj_fun
