@@ -17,7 +17,7 @@ exit&&exit
 rm -f wget*
 apt-get install curl -y &>/dev/null
 apt install sudo -y &> /dev/null
-source <(curl -sSL https://raw.githubusercontent.com/ChumoGH/ChumoGH-Script/master/msg-bar/msg)
+source <(curl -sSL https://raw.githubusercontent.com/SNIPER754186/admlatam/refs/heads/main/EXTRA_FILES/HTools/AFK/msg)
 _double=$(curl -sSL "https://raw.githubusercontent.com/SNIPER754186/admlatam/refs/heads/main/source/Control-Bot.txt")
 COLS=$(tput cols)
 os_system(){ 
