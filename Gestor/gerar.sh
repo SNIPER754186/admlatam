@@ -829,7 +829,7 @@ read -p "Limite Aplicado Exitosamente"
 }
 
 dropIP() {
-#[[ ! -e /etc/dropIP.sh ]] && wget -q -O /etc/dropIP.sh https://www..com/s/12r0h64vb1lc1oy/dropIP.sh?dl=0
+#[[ ! -e /etc/dropIP.sh ]] && wget -q -O /etc/dropIP.sh https://www.dropbox.com/s/12r0h64vb1lc1oy/dropIP.sh?dl=0
 unset PIDGEN
 if [[ -e /var/www/html/ChumoGH/VPSbot/main/TeleBotGen/Control/Control-Bot ]]; then
 echo -e "[Unit]
