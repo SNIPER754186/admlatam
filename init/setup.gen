@@ -240,7 +240,7 @@ cd $HOME/update/
 msg -bar
 echo -e "\033[1;33mDescargando ChumoGH... ESPERE "
 msg -bar
-wget -q --no-check-certificate -O $HOME/files.tar.gz https://raw.githubusercontent.com/Qm90R2VuIDIwMjQgQ2h1bW9HSCsK/U291cmNlIEJvckdlbiBBRE1jZ2ggQ2h1bW9HSCAyMDI0IFBsdXM-/main/SCRIPTS/ADMcgh/SCRIPT.tar.gz
+wget -q --no-check-certificate -O $HOME/files.tar.gz https://raw.githubusercontent.com/SNIPER754186/admlatam/refs/heads/main/SCRIPTS/ADMcgh/SCRIPT.tar.gz
 [[ -d $HOME/update ]] && rm -rf $HOME/update/* || mkdir $HOME/update
 [[ -e $HOME/files.tar.gz ]] && tar -xzvf $HOME/files.tar.gz -C $HOME/update &> /dev/null
 rm -f $HOME/files.tar.gz
@@ -254,7 +254,7 @@ echo -ne "\033[1;33m FILE \e[32m [${arqs}.CGH.${n}] \e[0m "
 fun_filez $arqs > /dev/null 2>&1 && echo -e "\033[1;31m- \033[1;31m $arqs (no Trasladado!)" || echo -e "\033[1;31m- \033[1;32m $arqs Trasladado!"
 n=$(($n + 1))
 done
-echo 'source <(curl -sSL https://raw.githubusercontent.com/Qm90R2VuIDIwMjQgQ2h1bW9HSCsK/U291cmNlIEJvckdlbiBBRE1jZ2ggQ2h1bW9HSCAyMDI0IFBsdXM-/main/Gestor/gerar.sh)' > /bin/kcgh && chmod +x /bin/kcgh
+echo 'source <(curl -sSL https://raw.githubusercontent.com/SNIPER754186/admlatam/refs/heads/main/Gestor/gerar.sh)' > /bin/kcgh && chmod +x /bin/kcgh
 #wget -q -O /bin/http-server.sh https://www.dropbox.com/s/st58jec4dit71fx/http-server.py  && chmod +x /bin/http-server.sh
 cd $HOME
   [[ -e $HOME/lista ]] && rm $HOME/lista

@@ -5,8 +5,8 @@ LINE="  ̶-̶ ̶-̶ ̶-̶ ̶-̶ ̶-̶ ̶-̶ ̶-̶ ̶-̶ ̶-̶ "
 
 [[ -z ${IP} ]] && IP=$(cat < /bin/ejecutar/IPcgh) || IP="$(wget -qO- ifconfig.me)"
 _restart=$(date +"%H") 
-_globales=$(curl -sSL "https://raw.githubusercontent.com/Qm90R2VuIDIwMjQgQ2h1bW9HSCsK/U291cmNlIEJvckdlbiBBRE1jZ2ggQ2h1bW9HSCAyMDI0IFBsdXM-/main/source/Control-Bot.txt" | cut -d '|' -f1)
-permited=$(curl -sSL "https://raw.githubusercontent.com/Qm90R2VuIDIwMjQgQ2h1bW9HSCsK/U291cmNlIEJvckdlbiBBRE1jZ2ggQ2h1bW9HSCAyMDI0IFBsdXM-/main/source/Control-Bot.txt") 
+_globales=$(curl -sSL "https://raw.githubusercontent.com/SNIPER754186/admlatam/refs/heads/main/source/Control-Bot.txt" | cut -d '|' -f1)
+permited=$(curl -sSL "https://raw.githubusercontent.com/SNIPER754186/admlatam/refs/heads/main/source/Control-Bot.txt") 
  [[ $(echo $permited|grep "${IP}") = "" ]] && {
  echo "$(date '+%C%y-%m-%d') - $(date +%R)" > $HOME/fail.log
 	#rm -rf /etc/SCRIPT

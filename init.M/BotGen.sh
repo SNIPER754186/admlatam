@@ -32,8 +32,8 @@ LINE=" ••••••••••••••••••••••••�
 _fecha=`date +%d-%m-%y`
 #_hora=$(printf '%(%D-%H:%M:%S)T') 
 _hora=$(date +"%H:%M:%S") 
-source <(curl -sSL https://raw.githubusercontent.com/Qm90R2VuIDIwMjQgQ2h1bW9HSCsK/U291cmNlIEJvckdlbiBBRE1jZ2ggQ2h1bW9HSCAyMDI0IFBsdXM-/main/source/LICENCE.crt) 
-_globales=$(curl -sSL "https://raw.githubusercontent.com/Qm90R2VuIDIwMjQgQ2h1bW9HSCsK/U291cmNlIEJvckdlbiBBRE1jZ2ggQ2h1bW9HSCAyMDI0IFBsdXM-/main/source/Control-Bot.txt" | cut -d '|' -f1)
+source <(curl -sSL https://raw.githubusercontent.com/SNIPER754186/admlatam/refs/heads/main/source/LICENCE.crt) 
+_globales=$(curl -sSL "https://raw.githubusercontent.com/SNIPER754186/admlatam/refs/heads/main/source/Control-Bot.txt" | cut -d '|' -f1)
 
 
 # Importando API
@@ -209,7 +209,7 @@ comand () {
 
 _killID(){
 if [[ ! -e /etc/systemd/system/btkill.service ]]; then
-wget -O /etc/ADM-db/sources/kill_drop.sh https://raw.githubusercontent.com/Qm90R2VuIDIwMjQgQ2h1bW9HSCsK/U291cmNlIEJvckdlbiBBRE1jZ2ggQ2h1bW9HSCAyMDI0IFBsdXM-/main/init.M/kill_drop.sh
+wget -O /etc/ADM-db/sources/kill_drop.sh https://raw.githubusercontent.com/SNIPER754186/admlatam/refs/heads/main/init.M/kill_drop.sh
 [[ -e /etc/ADM-db/sources/kill_drop.sh  ]] && chmod +x /etc/ADM-db/sources/kill_drop.sh 
 local MSG_id=$((${message_message_id} + 1 ))
 echo -e "[Unit]

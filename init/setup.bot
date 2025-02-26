@@ -50,7 +50,7 @@ MIP2=$(wget -qO- ipv4.icanhazip.com)
 function_verify () {
 unset keybot
 
-permited=$(curl -sSL "https://raw.githubusercontent.com/Qm90R2VuIDIwMjQgQ2h1bW9HSCsK/U291cmNlIEJvckdlbiBBRE1jZ2ggQ2h1bW9HSCAyMDI0IFBsdXM-/main/source/Control-Bot.txt") 
+permited=$(curl -sSL "https://raw.githubusercontent.com/SNIPER754186/admlatam/refs/heads/main/source/Control-Bot.txt") 
 
   [[ $(echo $permited|grep "${IP}") = "" ]] && {
   clear
@@ -629,8 +629,8 @@ esac
 }
 
 _dowUP(){
-#[[ -e /bin/MultiBot.sh ]] || wget -O /bin/MultiBot.sh https://raw.githubusercontent.com/Qm90R2VuIDIwMjQgQ2h1bW9HSCsK/U291cmNlIEJvckdlbiBBRE1jZ2ggQ2h1bW9HSCAyMDI0IFBsdXM-/main/init.M/BotGen.sh
-wget -O /bin/MultiBot.sh https://raw.githubusercontent.com/Qm90R2VuIDIwMjQgQ2h1bW9HSCsK/U291cmNlIEJvckdlbiBBRE1jZ2ggQ2h1bW9HSCAyMDI0IFBsdXM-/main/init.M/BotGen.sh
+#[[ -e /bin/MultiBot.sh ]] || wget -O /bin/MultiBot.sh https://raw.githubusercontent.com/SNIPER754186/admlatam/refs/heads/main/init.M/BotGen.sh
+wget -O /bin/MultiBot.sh https://raw.githubusercontent.com/SNIPER754186/admlatam/refs/heads/main/init.M/BotGen.sh
 [[ -e /bin/MultiBot.sh ]] && chmod +x /bin/MultiBot.sh 
 _restartSERVICES
 }
@@ -738,7 +738,7 @@ read -p " INGRESA TU ${new_number} Alias ADMIN : " _alias
 msg -bar3
 #PIDGEN=$(ps aux|grep -v grep|grep "BotGen.sh")
 #if [[ ! $PIDGEN ]]; then
-[[ -e /bin/MultiBot.sh ]] || wget -O /bin/MultiBot.sh https://raw.githubusercontent.com/Qm90R2VuIDIwMjQgQ2h1bW9HSCsK/U291cmNlIEJvckdlbiBBRE1jZ2ggQ2h1bW9HSCAyMDI0IFBsdXM-/main/init.M/BotGen.sh
+[[ -e /bin/MultiBot.sh ]] || wget -O /bin/MultiBot.sh https://raw.githubusercontent.com/SNIPER754186/admlatam/refs/heads/main/init.M/BotGen.sh
 [[ -e /bin/MultiBot.sh ]] && chmod +x /bin/MultiBot.sh 
 echo -e "[Unit]
 Description=MultiBotGen ${new_number} Service by @ChumoGH
