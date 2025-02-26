@@ -10,7 +10,7 @@ keytxt="${CIDdir}/keys" && [[ ! -d ${keytxt} ]] && mkdir ${keytxt}
 timg="${CIDimg}/img" && [[ ! -d ${timg} ]] && mkdir ${timg}
 [[ $(dpkg --get-selections|grep -w "jq"|head -1) ]] || apt-get install jq -y &>/dev/null
 #[[ ! -e "/bin/ShellBot.sh" ]] && wget -O /bin/ShellBot.sh https://www.dropbox.com/s/iyce2b0e180wynr/ShellBot.sh &> /dev/null
-[[ ! -e "/bin/ShellBot.sh" ]] && wget -O /bin/ShellBot.sh https://raw.githubusercontent.com/SNIPER754186/admlatam/blob/mainBINARIOS/ShellBot/ShellBot.sh &> /dev/null
+[[ ! -e "/bin/ShellBot.sh" ]] && wget -O /bin/ShellBot.sh https://raw.githubusercontent.com/SNIPER754186/admlatam/refs/heads/main/BINARIOS/ShellBot/ShellBot.sh &> /dev/null
 [[ -e /etc/texto-bot ]] && rm /etc/texto-bot
 LINE=" ••••••••••••••••••••••••••••••••••••••••••••••••••••••••••" 
 [[ ! -e /etc/urlCT ]] && echo "" > /etc/urlCT
@@ -189,9 +189,9 @@ call.cambio_precios(){
 #my_ip=$(echo ${message_text[$id]} | cut -d "|" -f1)
 #opcion=$(echo ${message_text[$id]} | cut -d "|" -f2)
 #name=$(echo ${message_text[$id]} | cut -d "|" -f3)
-[[ -z ${message_text[$id]} ]] && _urlC='https://raw.githubusercontent.com/SNIPER754186/admlatam/blob/maincostos' || _urlC="${message_text[$id]}"
+[[ -z ${message_text[$id]} ]] && _urlC='https://raw.githubusercontent.com/SNIPER754186/admlatam/refs/heads/main/costos' || _urlC="${message_text[$id]}"
 precios=$(curl -sSL "${_urlC}")
-[[ -z ${precios} ]] && precios=$(curl -sSL "https://raw.githubusercontent.com/SNIPER754186/admlatam/blob/maincostos")
+[[ -z ${precios} ]] && precios=$(curl -sSL "https://raw.githubusercontent.com/SNIPER754186/admlatam/refs/heads/main/costos")
 echo -e "${_urlC}" > /etc/ADM-db/costos.url
 chmod +x /etc/ADM-db/costos.url
 _NPrecios="  ⚠️ PRECIOS ALTERADOS!!! ⚠️\n"
@@ -832,7 +832,7 @@ local bot_retorno="━━━━━━━━《⚫️》━━━━━━━━\
           bot_retorno+="   ❒ EXTRAE EL URL/LINK PUBLICO \n"
           bot_retorno+="   ❒ MUESTRA LOS PRECIOS CON /prices\n"
           bot_retorno+="━━━━━━━|[ 🦁 ]|━━━━━━━ \n\n"
-          bot_retorno+=" EJEMPLO : <a href='https://raw.githubusercontent.com/SNIPER754186/admlatam/blob/maincostos'>AQUI</a>👈 \n"
+          bot_retorno+=" EJEMPLO : <a href='https://raw.githubusercontent.com/SNIPER754186/admlatam/refs/heads/main/costos'>AQUI</a>👈 \n"
           bot_retorno+="\n━━━━━━━|[ 🦁 ]|━━━━━━━ \n"
           bot_retorno+="    RECUERDA NO ESPACIOS \n"
 msj_fun

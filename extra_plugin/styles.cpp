@@ -13,7 +13,7 @@ _check4=$8
 _check5=$9
 https://github.com/SNIPER754186/admlatam/blob/main/extra_plugin/styles.cpp
 archivo_local="/bin/ejecutar/msg"
-archivo_remoto="https://raw.githubusercontent.com/SNIPER754186/admlatam/blob/main/extra_plugin/styles.cpp"
+archivo_remoto="https://raw.githubusercontent.com/SNIPER754186/admlatam/refs/heads/main/extra_plugin/styles.cpp"
 
 
 menu_func(){

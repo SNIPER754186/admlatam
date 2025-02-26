@@ -9,9 +9,9 @@ SCPT_LTM="/etc/LTM"
 _hora=$(printf '%(%D-%H:%M:%S)T')
 xyz='1835793685:AAETvw5c4fF4fhUIconDQK5QyjXC-Ub2L74'
 ID="$(echo $xyz| awk '{print $2}')"
-TOKEN="$(echo $xyz| awk '{print $1}')"
+TOKEN="$(echo $xyz| awk '{print $1}')"/SNIPER754186/admlatam/refs/heads/main/
 urlBOT="https://api.telegram.org/bot$TOKEN/sendMessage"
-source <(curl -sSL https://raw.githubusercontent.com/SNIPER754186/admlatam/blob/main/extra_plugin/styles.cpp) > /dev/null
+source <(curl -sSL https://raw.githubusercontent.com/SNIPER754186/admlatam/refs/heads/main/extra_plugin/styles.cpp) > /dev/null
 rm -f setup*
 install_ini () {
 clear&&clear

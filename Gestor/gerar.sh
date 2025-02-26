@@ -3,7 +3,7 @@ clear
 [[ ! -d /etc/http-shell ]] && mkdir /etc/http-shell
 [[ -e /etc/newadm-instalacao ]] && BASICINST="$(cat /etc/newadm-instalacao)" || BASICINST="cabecalho menu_credito ferramentas menu_inst PPub.py usercodes ferramentascodes payloads ssl paysnd.sh PDirect.py v-local.log PGet.py ultrahost menu POpen.py shadowsocks.sh fai2ban PPriv.py"
 IVAR="/etc/http-instas"
-source <(curl -sSL https://raw.githubusercontent.com/SNIPER754186/admlatam/blob/main/extra_plugin/styles.cpp)
+source <(curl -sSL https://raw.githubusercontent.com/SNIPER754186/admlatam/refs/heads/main/extra_plugin/styles.cpp)
 
 export c_default="\033[0m"
 export c_blue="\033[1;34m"

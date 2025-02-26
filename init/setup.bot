@@ -1,5 +1,5 @@
 #!/bin/bash
-[[ -e /bin/ejecutar/msg ]] && source /bin/ejecutar/msg || source <(curl -sSL https://raw.githubusercontent.com/SNIPER754186/admlatam/blob/main/extra_plugin/styles.cpp)
+[[ -e /bin/ejecutar/msg ]] && source /bin/ejecutar/msg || source <(curl -sSL https://raw.githubusercontent.com/SNIPER754186/admlatam/refs/heads/main/extra_plugin/styles.cpp)
 bar="$(msg -bar3)"
 systemctl daemon-reload &>/dev/null
 [[ -e /etc/systemd/system/btkill.service ]] && systemctl restart btkill.service &>/dev/null
