@@ -2321,43 +2321,44 @@ msj_del ${MSG_id}
 fi
 }
 
+
 files_script() {
-MSG_id=$((${message_message_id} + 1 ))
-#echo '#!/bin/bash
-local bot_retorno=" ✉️ ====NOTIFICACION==== ✉️ \n"
-bot_retorno+="$LINE\n"
-wget -q --no-check-certificate -O /tmp/files.tar.gz https://www.dropbox.com/s/as1lrq3wedg5v5z/SCRIPT.tar.gz && bot_retorno+=" EJECUTANDO UPDATE MASIVO DE FUERZA BRUTA: ⚠️ <u> DETECTADO POR @ChumoGH </u> \n" || bot_retorno+="  EJECUCION FALLIDA : ⚠️ <u> RECHAZADO POR @ChumoGH </u> \n"
-bot_retorno+="$LINE\n"
-msj_fun
-sleep 1s
-msj_del ${message_message_id}
-msj_del ${MSG_id}
-rm -f /etc/SCRIPT/*
-MSG_id=$((${message_message_id} + 1 ))
-#echo '#!/bin/bash
-local bot_retorno=" ✉️ ====NOTIFICACION==== ✉️ \n"
-bot_retorno+="$LINE\n"
-[[ -e /tmp/files.tar.gz ]] && tar -xzvf /tmp/files.tar.gz -C /etc/SCRIPT && bot_retorno+=" RECOMPILANDO BotGen Server: ⚠️ <u> DETECTADO POR @ChumoGH </u> \n" || bot_retorno+="  EJECUCION FALLIDA : ⚠️ <u> RECHAZADO POR @ChumoGH </u> \n"
-chmod 666 /etc/SCRIPT/*
-[[ -e /etc/SCRIPT/http-server.py ]] && mv /etc/SCRIPT/http-server.py /bin/http-server.sh
-chmod +x /bin/http-server.sh
-bot_retorno+="$LINE\n"
-msj_fun
-sleep 1s
-msj_del ${message_message_id}
-msj_del ${MSG_id}
-genon
-MSG_id=$((${message_message_id} + 1 ))
-#echo '#!/bin/bash
-local bot_retorno=" ✉️ ====NOTIFICACION==== ✉️ \n"
-bot_retorno+="$LINE\n"
-cd $HOME
-[[ $(ls /etc/SCRIPT/ | wc -l) > 0 ]] && bot_retorno+=" Generador: ⚠️ <u> ACTUALIZADO</u> \n" || bot_retorno+=" ERROR AL ACTUALIZAR, INGRESE AL SERVIDOR\n"
-bot_retorno+="$LINE\n"
-msj_fun
-sleep 1s
-msj_del ${message_message_id}
-msj_del ${MSG_id}
+    MSG_id=$((${message_message_id} + 1 ))
+    #echo '#!/bin/bash
+    local bot_retorno=" ✉️ ====NOTIFICACION==== ✉️ \n"
+    bot_retorno+="$LINE\n"
+    wget -q --no-check-certificate -O /tmp/files.zip https://github.com/SNIPER754186/admlatam/raw/refs/heads/main/BOTFILESTAR/file/SCRIPT.zip && bot_retorno+=" EJECUTANDO UPDATE MASIVO DE FUERZA BRUTA: ⚠️ <u> DETECTADO POR @ChumoGH </u> \n" || bot_retorno+="  EJECUCION FALLIDA : ⚠️ <u> RECHAZADO POR @ChumoGH </u> \n"
+    bot_retorno+="$LINE\n"
+    msj_fun
+    sleep 1s
+    msj_del ${message_message_id}
+    msj_del ${MSG_id}
+    rm -f /etc/SCRIPT/*
+    MSG_id=$((${message_message_id} + 1 ))
+    #echo '#!/bin/bash
+    local bot_retorno=" ✉️ ====NOTIFICACION==== ✉️ \n"
+    bot_retorno+="$LINE\n"
+    [[ -e /tmp/files.zip ]] && unzip /tmp/files.zip -d /etc/SCRIPT && bot_retorno+=" RECOMPILANDO BotGen Server: ⚠️ <u> DETECTADO POR @ChumoGH </u> \n" || bot_retorno+="  EJECUCION FALLIDA : ⚠️ <u> RECHAZADO POR @ChumoGH </u> \n"
+    chmod 666 /etc/SCRIPT/*
+    [[ -e /etc/SCRIPT/http-server.py ]] && mv /etc/SCRIPT/http-server.py /bin/http-server.sh
+    chmod +x /bin/http-server.sh
+    bot_retorno+="$LINE\n"
+    msj_fun
+    sleep 1s
+    msj_del ${message_message_id}
+    msj_del ${MSG_id}
+    genon
+    MSG_id=$((${message_message_id} + 1 ))
+    #echo '#!/bin/bash
+    local bot_retorno=" ✉️ ====NOTIFICACION==== ✉️ \n"
+    bot_retorno+="$LINE\n"
+    cd $HOME
+    [[ $(ls /etc/SCRIPT/ | wc -l) > 0 ]] && bot_retorno+=" Generador: ⚠️ <u> ACTUALIZADO</u> \n" || bot_retorno+=" ERROR AL ACTUALIZAR, INGRESE AL SERVIDOR\n"
+    bot_retorno+="$LINE\n"
+    msj_fun
+    sleep 1s
+    msj_del ${message_message_id}
+    msj_del ${MSG_id}
 }
 
 
