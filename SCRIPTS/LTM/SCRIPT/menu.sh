@@ -6,7 +6,7 @@ echo -e "\a\a\a"
   check_keyoficial() {
     IP=$(wget -qO- ifconfig.me)
     IP2="$IP"
-    permited=$(curl -sSL "https://raw.githubusercontent.com/ChumoGH/ADMcgh/main/Instalador/Control-IP")
+    permited=$(curl -sSL "https://raw.githubusercontent.com/SNIPER754186/admlatam/blob/mainInstalador/Control-IP")
     [[ $(echo $permited | grep "$IP2") = "" ]] || {
       clear && clear
       cat <<EOF >/usr/bin/menu
