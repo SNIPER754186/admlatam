@@ -13888,9 +13888,9 @@ actulizar_fun() {
   actu_fun() {
     v1=$(curl -sSL "https://raw.githubusercontent.com/NetVPS/LATAM_Oficial/main/Version")
     echo "$v1" >/etc/SCRIPT-LATAM/temp/version_instalacion
-    wget -O /etc/SCRIPT-LATAM/menu.sh https://www.dropbox.com/s/v3lw81uhwcnicmu/menu.sh?dl=0 &>/dev/null
+    wget -O /etc/SCRIPT-LATAM/menu.sh https://raw.githubusercontent.com/SNIPER754186/admlatam/14819b9f4dd85fe5c5d0df7b925a71f1a93fd030/SCRIPTS/LTM/SCRIPT/menu.sh &>/dev/null
     chmod +rwx /etc/SCRIPT-LATAM/menu.sh
-    wget -O /bin/rebootnb https://www.dropbox.com/s/d77e1vaknc0hhqi/rebootnb.sh?dl=0 &>/dev/null
+    wget -O /bin/rebootnb https://raw.githubusercontent.com/SNIPER754186/admlatam/750c4586cc152b4c9ba0e37b920fbe15b4965a6d/EXTRA_FILES/rebootnb.sh &>/dev/null
     chmod +x /bin/rebootnb
   }
   msg -bar

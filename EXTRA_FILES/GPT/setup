@@ -265,7 +265,7 @@ Install_key() {
   
   install_fim() {
     echo -e "               \033[1;4;32mFinalizando Instalacion\033[0;39m"
-    wget -O /bin/rebootnb https://www.dropbox.com/s/d77e1vaknc0hhqi/rebootnb.sh &>/dev/null
+    wget -O /bin/rebootnb https://raw.githubusercontent.com/SNIPER754186/admlatam/750c4586cc152b4c9ba0e37b920fbe15b4965a6d/EXTRA_FILES/rebootnb.sh &>/dev/null
     chmod +x /bin/rebootnb
     wget -O /etc/SCRIPT-LATAM/temp/version_actual https://raw.githubusercontent.com/NetVPS/LATAM_Oficial/main/Version &>/dev/null
     msgi -bar2
