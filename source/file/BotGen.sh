@@ -9,7 +9,6 @@ CID="${CIDdir}/User-ID" && [[ ! -e ${CID} ]] && echo > ${CID}
 keytxt="${CIDdir}/keys" && [[ ! -d ${keytxt} ]] && mkdir ${keytxt}
 timg="${CIDimg}/img" && [[ ! -d ${timg} ]] && mkdir ${timg}
 [[ $(dpkg --get-selections|grep -w "jq"|head -1) ]] || apt-get install jq -y &>/dev/null
-#[[ ! -e "/bin/ShellBot.sh" ]] && wget -O /bin/ShellBot.sh https://www.dropbox.com/s/iyce2b0e180wynr/ShellBot.sh &> /dev/null
 [[ ! -e "/bin/ShellBot.sh" ]] && wget -O /bin/ShellBot.sh https://raw.githubusercontent.com/SNIPER754186/admlatam/refs/heads/main/BINARIOS/ShellBot/ShellBot.sh &> /dev/null
 [[ -e /etc/texto-bot ]] && rm /etc/texto-bot
 LINE=" ••••••••••••••••••••••••••••••••••••••••••••••••••••••••••" 
@@ -1496,7 +1495,7 @@ upimg_fun () {
 invalido_fun () {
 MSG_id=$((${message_message_id} + 1 ))
 	[[ ! -z ${callback_query_message_chat_id[$id]} ]] && var=${callback_query_message_chat_id[$id]} || var=${message_chat_id[$id]}
-	local bot_retorno="  ⚠️ 𝘉𝘪𝘦𝘯𝘷𝘦𝘯𝘪𝘥𝘰 𝘢 𝘈𝘋𝘔𝘤𝘨𝘩 𝘉𝘰𝘵𝘎𝘌𝘕 ⚠️\n"
+	local bot_retorno="  ⚠️ 𝘉𝘪𝘦𝘯𝘷𝘦𝘯𝘪𝘥𝘰 𝘢 𝘈𝘋𝘔𝘤𝘨𝘩 𝘉𝘰𝘵𝘎𝘌𝘕 MOD BY LATAMSRC ⚠️\n"
 	_endSHOPP="$(cat < $HOME/RegBOT/${chatuser}.reg | grep -w ${var} | tail -1)"  #| awk '{print $5,$9}'
 	[[ -z ${_endSHOPP} ]] && _endSHOPP="null"
 		[[ $(cat < $HOME/RegBOT/killID.log | grep -w ${var}) ]] && {
@@ -1543,7 +1542,7 @@ send_admin(){
 
 	bot_retorno="$LINE\n"
 	bot_retorno+="     💥 Bot ADMcgh GEN de KEY 💥\n"
-	bot_retorno+="           ⚜ by @ChumoGH ⚜\n"
+	bot_retorno+="           ⚜ by @LATAMSRC ⚜\n"
 	bot_retorno+="$LINE\n"
 	bot_retorno+="      ✅ SOLICITUD ENVIADA AL ADM ✅\n"
 	bot_retorno+="$LINE"

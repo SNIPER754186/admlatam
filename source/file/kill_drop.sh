@@ -72,7 +72,7 @@ for _Fechas in $(cat ${CID} | cut -d '|' -f2); do
           MENSAJE+=" RENUEVA TU MEMBRESIA DIGITANDO /prices \n"
           MENSAJE+=" RECUERDA MANTENER TU CAPTURA DE PAGO, PARA ALGUN RECLAMO!\n"
           MENSAJE+=" $LINE\n"
-		  MENSAJE+='&reply_markup={"inline_keyboard":[[{"text":" SU ID ","callback_data":"/id"},{"text":" SOPORTE ","url":"https://t.me/ChumoGH_ADM"}]]}'
+		  MENSAJE+='&reply_markup={"inline_keyboard":[[{"text":" SU ID ","callback_data":"/id"},{"text":" SOPORTE ","url":"https://t.me/gatesccn"}]]}'
 		  curl -s --max-time 10 -d "chat_id=$id&disable_web_page_preview=1&text=$(echo -e "$MENSAJE")" ${urlBOT} &>/dev/null
 		  #curl -s --max-time 10 -d "chat_id=${id}&disable_web_page_preview=1&text=$(echo -e "$MENSAJE")" $urlBOT &>/dev/null  
 	done

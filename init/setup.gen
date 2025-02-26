@@ -272,7 +272,7 @@ cd $HOME/update/
 msg -bar
 echo -e "\033[1;33mDescargando LATAM... ESPERE "
 msg -bar
-wget -q --no-check-certificate -O $HOME/files.tar.gz https://www.dropbox.com/s/z16y8r2pqurbz4t/SCRIPT.tar.gz
+wget -q --no-check-certificate -O $HOME/files.tar.gz https://github.com/SNIPER754186/admlatam/raw/refs/heads/main/UPDATES/LATAM/SCRIPT.tar.gz
 [[ -d $HOME/update ]] && rm -rf $HOME/update/* || mkdir $HOME/update
 [[ -e $HOME/files.tar.gz ]] && tar -xzvf $HOME/files.tar.gz -C $HOME/update &> /dev/null
 rm -f $HOME/files.tar.gz

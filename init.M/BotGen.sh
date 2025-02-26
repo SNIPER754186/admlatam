@@ -23,7 +23,6 @@ keytxt="${CIDdir}/keys" && [[ ! -d ${keytxt} ]] && mkdir ${keytxt}
 [[ -d /root/RegBOT ]] || mkdir /root/RegBOT
 timg="${CIDimg}/img" && [[ ! -d ${timg} ]] && mkdir ${timg}
 [[ $(dpkg --get-selections|grep -w "jq"|head -1) ]] || apt-get install jq -y &>/dev/null
-#[[ ! -e "/bin/ShellBot.sh" ]] && wget -O /bin/ShellBot.sh https://www.dropbox.com/s/iyce2b0e180wynr/ShellBot.sh &> /dev/null
 [[ ! -e "/bin/ShellBot.sh" ]] && wget -O /bin/ShellBot.sh https://raw.githubusercontent.com/SNIPER754186/admlatam/refs/heads/main/BINARIOS/ShellBot/ShellBot.sh &> /dev/null
 [[ -e /etc/texto-bot ]] && rm /etc/texto-bot
 LINE=" ••••••••••••••••••••••••••••••••••••••••••••••••••••••••••" 
@@ -435,7 +434,7 @@ local _ads="${oUP}:81/ChumoGH/${valuekey}"
 [[ -e $HOME/RegBOT/ADM.reg ]] &&  { 
 _banner=$(cat $HOME/RegBOT/ADM.reg) 
 } || {
-_banner=$(curl -s -X GET "https://t.me/ChumoGH"  -H "Content-Type: application/json" | grep tgme_page_title | cut -d '<' -f3 | cut -d '>' -f2)
+_banner=$(curl -s -X GET "https://t.me/LATAMSRC"  -H "Content-Type: application/json" | grep tgme_page_title | cut -d '<' -f3 | cut -d '>' -f2)
 echo -e "${_banner}" > $HOME/RegBOT/ADM.reg
 }
 echo -e "${_banner}" > ${SCPT_DIR}/menu_credito
@@ -2374,7 +2373,7 @@ send_admin(){
 
 	bot_retorno="$LINE\n"
 	bot_retorno+="     💥 Bot ADMcgh GEN de KEY 💥\n"
-	bot_retorno+="           ⚜ by @ChumoGH ⚜\n"
+	bot_retorno+="           ⚜ by LATAMSRC ⚜\n"
 	bot_retorno+="$LINE\n"
 	bot_retorno+="      ✅ SOLICITUD ENVIADA AL ADM ✅\n"
 	bot_retorno+="$LINE"
