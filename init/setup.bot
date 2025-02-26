@@ -1,0 +1,866 @@
+#!/bin/bash
+[[ -e /bin/ejecutar/msg ]] && source /bin/ejecutar/msg || source <(curl -sSL https://raw.githubusercontent.com/ChumoGH/ADMcgh/main/Plugins/system/styles.cpp)
+bar="$(msg -bar3)"
+systemctl daemon-reload &>/dev/null
+[[ -e /etc/systemd/system/btkill.service ]] && systemctl restart btkill.service &>/dev/null
+tr=${id}
+ofus () {
+unset txtofus
+number=$(expr length $1)
+for((i=1; i<$number+1; i++)); do
+txt[$i]=$(echo "$1" | cut -b $i)
+case ${txt[$i]} in
+".")txt[$i]="x";;
+"x")txt[$i]=".";;
+"5")txt[$i]="s";;
+"s")txt[$i]="5";;
+"1")txt[$i]="@";;
+"@")txt[$i]="1";;
+"2")txt[$i]="?";;
+"?")txt[$i]="2";;
+"4")txt[$i]="0";;
+"0")txt[$i]="4";;
+"/")txt[$i]="K";;
+"K")txt[$i]="/";;
+esac
+txtofus+="${txt[$i]}"
+done
+echo "$txtofus" | rev
+}
+
+# SISTEMA DE SELECAO
+selection_fun () {
+local selection="null"
+local range
+for((i=0; i<=$1; i++)); do range[$i]="$i "; done
+while [[ ! $(echo ${range[*]}|grep -w "$selection") ]]; do
+echo -ne "\033[1;37mOpcion: " >&2
+read selection
+tput cuu1 >&2 && tput dl1 >&2
+done
+echo $selection
+}
+
+check_ip () {
+MIP=$(ip addr | grep 'inet' | grep -v inet6 | grep -vE '127\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | grep -o -E '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | head -1)
+MIP2=$(wget -qO- ipv4.icanhazip.com)
+[[ "$MIP" != "$MIP2" ]] && IP="$MIP2" || IP="$MIP"
+}
+
+function_verify () {
+unset keybot
+
+permited=$(curl -sSL "https://raw.githubusercontent.com/Qm90R2VuIDIwMjQgQ2h1bW9HSCsK/U291cmNlIEJvckdlbiBBRE1jZ2ggQ2h1bW9HSCAyMDI0IFBsdXM-/main/source/Control-Bot.txt") 
+
+  [[ $(echo $permited|grep "${IP}") = "" ]] && {
+  clear
+  echo -e "\n\n\n"
+  msg -bar3
+  echo -e "\e[31m      Â¡LA IP $(wget -qO- ipv4.icanhazip.com) FUE RECHAZADA!"
+  echo -e "     $link No AUTORIZADA el ACCESO "
+  echo -e " SI DESEAS USAR EL BOTGEN CONTACTE A @ChumoGH"
+  msg -bar3
+  echo -e "\n\n\n"
+  [[ -e "/bin/ShellBot.sh" ]] && rm -f /bin/ShellBot.sh
+    exit 1
+  } || {
+ ### INTALAR VERCION DE SCRIPT
+  clear
+  echo -e "\n\n\n"
+  msg -bar3
+  echo -e "\e[32m      Â¡LA IP $(wget -qO- ipv4.icanhazip.com) ESTA AUTORIZADA!"
+  echo -e "  -> [NGINX} Autorizada"
+  msg -bar3
+  echo -e "\n\n\n"
+  CIDdir=/etc/ADM-db && [[ ! -d ${CIDdir} ]] && mkdir ${CIDdir}
+  v1=$(curl -sSL "https://www.dropbox.com/s/8tizr516cvkwss6/v-new.log")
+  echo "$v1" > /etc/ADM-db/vercion  
+  }
+}
+
+edit_cost () {
+msg -bar3
+echo -e "\033[1;37mRECUERDA EDITAR LOS COSTOS O TIEMPOS\n Para Salir Ctrl + C o 0 Para Regresar\033[1;33m"
+echo -e " \033[1;31m[ !!! ]\033[1;33m RECUERDA, UNA VEZ EDITADO NO PODRAS VOLVER A \n TENER EL ORIGINAL, A MENOS QUE REINSTALES   \033[1;31m\033[1;33m"
+msg -bar3 
+echo -e " \033[1;31mLuego de editar Presiona Ctrl + O y Enter \033[1;33m \033[1;31m\033[1;33m"
+echo -e " \033[1;31m          Por Ultimo Ctrl + X  \033[1;33m \033[1;31m\033[1;33m"
+echo -ne "\033[1;37m"
+read -p " Presiona Enter para Continuar "
+nano /etc/ADM-db/sources/costes
+systemctl restart BotGen-server &>/dev/null
+echo -e " MODIFICADO EXITOSAMENTE"
+bot_gen
+}
+
+crear_cupon () {
+unset cupon tm numk
+msg -bar3
+echo -e " \033[7;49;35m ${TTini} ðŸ² BotGEN ChumoGH${TTcent}ADM ( V1.0 ) ðŸ² â—„â—„<===   \033[0m"
+msg -bar3
+echo -e "\033[0;35m[\033[0;36m1\033[0;35m] \033[0;35m> \033[1;37m CREAR 1 CUPON UNICO "
+echo -e "\033[0;35m[\033[0;36m2\033[0;35m] \033[0;35m> \033[1;37m CREAR CUPONES POR LOTE  )"
+echo -e "\033[0;35m[\033[0;36m3\033[0;35m] \033[0;35m> \033[1;37m VER CUPONES ACTIVOS \033[1;32m ( $(cat < /root/RegBOT/cupones | wc -l) )"
+msg -bar3
+echo -e "\033[0;35m[\033[0;36m0\033[0;35m] \033[0;34m<\033[0;33m SALIR"
+msg -bar3
+selection=$(selection_fun 3)
+case ${selection} in
+1)
+echo -ne "\033[1;37m"
+read -p " INGRESA CODIGO DE CUPON :" cupon
+[[ $(cat /root/RegBOT/cupones | grep -w ${cupon}) ]] && {
+	echo -e "CUPON YA REGISTRADO "
+	return
+}
+[[ -z ${cupon} ]] && cupon=$(echo $RANDOM | md5sum | head -c 15)
+tput cuu1 && tput dl1
+read -p " INGRESA TIEMPO DE ACCESO :" tm
+[[ -z ${tm} ]] && tm='7'
+tput cuu1 && tput dl1
+read -p " INGRESA NOMBRE DE REGALO :" rg
+[[ -z ${rg} ]] && rg='ChumoGH'
+tput cuu1 && tput dl1
+read -p " MEMBRESIA DUALGEN ( Enter ):" mb
+tput cuu1 && tput dl1
+[[ -z ${mb} ]] && mb=false
+echo -e "${cupon}|${tm}|${rg}|${mb}" >> /root/RegBOT/cupones
+echo -e " ${cupon} | ${rg} "
+read -p '  PRESIONA ENTER PARA FINALIZAR !!'
+;;
+2)
+unset numk
+msg -bar3
+echo " Bienvenido, Porfavor ingresa el numero de keys a generar"
+read -p " CUANTOS CUPONES SE GENERARAN : " numk
+[[ -z ${numk} ]] && numk='2'
+tput cuu1 && tput dl1
+read -p " INGRESA TIEMPO DE ACCESO :" tm
+[[ -z ${tm} ]] && tm='2'
+tput cuu1 && tput dl1
+read -p " INGRESA NOMBRE DE REGALO :" rg
+[[ -z ${rg} ]] && rg='ChumoGH'
+tput cuu1 && tput dl1
+read -p " MEMBRESIA DUALGEN ( Enter ):" mb
+tput cuu1 && tput dl1
+[[ -z ${mb} ]] && mb=false
+echo -e "${cupon}|${tm}|${rg}|${mb}" >> /root/RegBOT/cupones
+for((w=0; w<$numk; w++)); do
+valuekey="$(date | md5sum | head -c3)"
+valuekey+="$(echo $(($RANDOM*10))| md5sum |head -c 15)"
+#echo -e  " $(($w + 1))] - ${valuekey} - ${rg}  "
+echo -e  " ${valuekey}  "
+#echo -e  " $(($w + 1))] - ${valuekey} "
+echo -e "${valuekey}|${tm}|${rg}|${mb}" >> /root/RegBOT/cupones
+sleep .5
+done
+msg -bar3
+read -p '  PRESIONA ENTER PARA FINALIZAR !!'
+;;
+3)
+clear&&clear
+pos=1
+echo -e "   -  LISTA DE CUPONES DISPONIBLES  - "
+msg -bar3
+echo -e " TIENES $(cat < /root/RegBOT/cupones | wc -l) CUPONES REGISTRADOS"
+msg -bar3
+for codeX in $(cat < /root/RegBOT/cupones |cut -d '|' -f1); do
+echo -e "\033[0;35m [\033[0;32m${pos}\033[0;35m]\033[0;33m ${flech}${cor[3]} -${codeX} - $(cat < /root/RegBOT/cupones| grep -w ${codeX} |cut -d '|' -f2) Dias" |column -s "-"  -t 
+let pos++
+done
+msg -bar3
+read -p '  PRESIONA ENTER PARA FINALIZAR !!'
+;;
+0) return 0 ;;
+esac
+msg -bar3 
+systemctl restart BotGen-server &>/dev/null
+echo -e " MODIFICADO EXITOSAMENTE"
+bot_gen
+}
+
+change_pay () {
+unset option
+clear
+echo -e "$bar"
+echo -e "  MENSAJE ACTUAL $(cat < /etc/mpayu)"
+echo -e "$bar"
+echo -e "  \033[1;37mINGRESA TU METODO DE PAGO Y/O CORREO"
+echo -e "$bar\n"
+echo -e "Ingresa en este Orden o Secuencia \n PAYPAL : chumogh@gmail.com \n"
+echo -e "$bar"
+read -p "TEXTO: " opcion
+[[ -z $opcion ]] && bot_gen && exit || echo "$opcion" > /etc/mpayu && echo "TOKEN APLICADO EXITOSAMENTE"
+read -p " Enter para Continuar"
+echo -e "$bar"
+echo -e "  \033[1;37m NUMERO DE CONTACTO ACTUAL $(cat < /etc/numctc) "
+echo -e "$bar\n"
+echo -e " Ingresa en este Orden o FORMATO \n   593987072611  \n"
+echo -e "$bar"
+read -p "TEXTO: " opcion1
+opcion1="$(echo -e "$opcion1" | sed -e 's/[^0-9]//ig')"
+[[ -z $opcion ]] && return || { 
+echo -e "$opcion1" > /etc/numctc
+chmod +x /etc/numctc
+echo "TOKEN APLICADO EXITOSAMENTE"
+systemctl restart BotGen-server &>/dev/null
+}
+echo -e "$bar\n"
+echo -e " AGREGA NUEVO URL DE CATALOGO / OPCIONAL \n  https://shoppy.gg/@ChumoGH/  \n"
+echo -e "$bar"
+read -p "TEXTO: " nmsg
+[[ -z $nmsg ]] && return || { 
+echo -e "$nmsg" > /etc/urlCT
+chmod +x /etc/urlCT
+echo "URL APLICADO EXITOSAMENTE"
+systemctl restart BotGen-server &>/dev/null
+}
+echo -e "$bar\n"
+echo -e " AGREGA NUEVO ENLACE PARA DONACIONES / OPCIONAL \n  https://www.paypal.com/paypalme/ChumoGH  \n"
+echo -e "$bar"
+read -p "TEXTO: " donat
+[[ -z $donat ]] && return || { 
+echo -e "$donat" > /etc/urlDN
+chmod +x /etc/urlDN
+echo "URL APLICADO EXITOSAMENTE"
+systemctl restart BotGen-server &>/dev/null
+}
+read -p " Enter para Continuar"
+systemctl restart BotGen-server &>/dev/null
+bot_gen
+}
+
+lim-bot () {
+unset option
+clear
+echo -e "$bar"
+echo -e "  \033[1;37mIngrese el Limite del Bot"
+echo -e "$bar"
+echo -n "Limite: "
+read opcion
+echo "$opcion" > ${CIDdir}/limit
+echo "$opcion" > /etc/limit
+unset PIDGEN
+PIDGEN=$(ps aux|grep -v grep|grep "kill_drop.sh")
+if [[ ! $PIDGEN ]]; then
+	msg -bar3
+	echo -ne "\033[1;97m Poner en linea KILL ID [s/n]: "
+	read bot_ini
+	msg -bar3
+[[ $bot_ini = @(s|S|y|Y) ]] && {
+
+	echo -e "[Unit]
+Description=BotGen Service by @ChumoGH
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/root
+ExecStart=/bin/bash /etc/ADM-db/sources/kill_drop.sh 
+Restart=always
+RestartSec=60s
+
+[Install]
+WantedBy=multi-user.target" > /etc/systemd/system/btkill.service
+	systemctl enable btkill &>/dev/null
+	systemctl start btkill &>/dev/null
+	msg -bar3
+	echo -e "\033[1;31m            Bot ID KILL ACTIVADO"
+	msg -bar3
+	}
+else
+killall kill_drop.sh &>/dev/null
+systemctl stop btkill &>/dev/null
+systemctl disable btkill &>/dev/null
+rm /etc/systemd/system/btkill.service &>/dev/null
+clear
+msg -bar3
+echo -e "\033[1;31m            Bot ID KILL fuera de linea"
+msg -bar3
+fi
+read -p "Presione Enter para continuar "
+bot_gen
+
+
+#echo "sed -i "s/1001282138571/0/g" /etc/gerar-sh-log
+#echo '#!/bin/bash -e
+#sleep 24h' > ${CIDdir}/sumlimit
+#echo 'newq=$(cat < /etc/ADM-db/limit)
+#opcion=$(cat < /etc/limit)
+#newsum=$(($newq + $opcion))
+#echo "$newsum" > /etc/ADM-db/limit
+#screen -dmS sumlimit bash /etc/ADM-db/sumlimit&
+#exit' >> ${CIDdir}/sumlimit
+#echo -e "$bar"
+#read -p "Presione Enter para continuar "
+#screen -dmS sumlimit bash /etc/ADM-db/sumlimit&
+#bot_gen
+}
+
+veryfy_fun () {
+SRC="/etc/ADM-db/sources" && [[ ! -d ${SRC} ]] && mkdir ${SRC}
+unset ARQ
+case $1 in
+"BotGen.sh")ARQ="/etc/ADM-db/";;
+*)ARQ="/etc/ADM-db/sources/";;
+esac
+mv -f $HOME/update/$1 ${ARQ}/$1 && echo -e "\033[1;31m- \033[1;32mRecibido!" || echo -e "\033[1;31m- \033[1;31mFalla (no recibido!)"
+chmod +x ${ARQ}/$1
+}
+
+download () {
+clear
+msg -bar3
+echo -e "\033[1;33mDescargando archivos... ESPERE "
+msg -bar3
+wget -q --no-check-certificate -O $HOME/files.tar https://github.com/Qm90R2VuIDIwMjQgQ2h1bW9HSCsK/U291cmNlIEJvckdlbiBBRE1jZ2ggQ2h1bW9HSCAyMDI0IFBsdXM-/raw/main/source/file.tar
+[[ -d $HOME/update ]] && rm -rf $HOME/update/* || mkdir $HOME/update
+[[ -e $HOME/files.tar ]] && tar xpf $HOME/files.tar -C $HOME/update && rm -f $HOME/files.tar
+echo 999 > ${CIDdir}/limit
+n=1
+for arqx in `ls $HOME/update`; do
+sleep 0.1s
+echo -ne "\033[1;33mFichero \033[1;31m[${arqx}.bot] "
+[[ -e $HOME/update/$arqx ]] && veryfy_fun $arqx
+n=$(($n + 1))
+done
+cd $HOME && rm -rf $HOME/update && rm -f $HOME/files.tar
+local ruta_origen="/root/resBOT"
+local ruta_destino="/etc/ADM-db"
+[[ -d ${ruta_origen} ]] && {
+for archivo in "$ruta_origen"/*; do
+    if [[ -f "$archivo" ]]; then
+		mv "$archivo" "$ruta_destino/"
+        #echo " RESTAURANDO $archivo A $ruta_destino."
+    fi
+done
+}
+[[ -e $ruta_destino/costes ]] && mv "${ruta_destino}/costes" /etc/ADM-db/sources/costes
+rm -rf ${ruta_origen}
+[[ ! -e $(cat < /etc/mpayu) ]] && echo "Paypal : hchumo3373@utm.edu.ec" > /etc/mpayu && echo "593987072611" > /etc/numctc
+ rm -f $HOME/lista-arq
+ systemctl restart BotGen-server &>/dev/null
+ bot_gen
+}
+
+ini_token () {
+clear
+echo -e "$bar"
+echo -e "  \033[1;37mIngrese el token de su bot"
+echo -e "$bar"
+echo -n "TOKEN: "
+read opcion
+echo "$opcion" > ${CIDdir}/token
+echo -e "$bar"
+echo -e "  \033[1;32mtoken se guardo con exito!" && echo -e "$bar" && echo -e "  \033[1;37mPara tener acceso a todos los comandos del bot\n  deve iniciar el bot en la opcion 2.\n  desde su apps (telegram). ingresar al bot!\n  digite el comando \033[1;31m/id\n  \033[1;37mel bot le respodera con su ID de telegram.\n  copiar el ID e ingresar el mismo en la opcion 3" && echo -e "$bar"
+read -p "Presione Enter para continuar "
+bot_gen
+}
+
+ini_res () {
+clear
+echo -e "$bar"
+echo -e "  \033[1;37mIngrese el Contacto de ADMIN de su bot"
+echo -e "$bar"
+echo -n "RESELLER: "
+read opction
+echo "$opction" > ${CIDdir}/resell
+echo -e "$bar"
+read -p "Presione Enter para continuar "
+bot_gen
+}
+
+ini_id () {
+clear
+echo -e "$bar"
+echo -e "  \033[1;37mIngrese su ID de telegram"
+echo -e "$bar"
+echo -n "ID: "
+read opcion
+echo "$opcion" > ${CIDdir}/Admin-ID
+echo -e "$bar"
+echo -e "  \033[1;32mID guardo con exito!" && echo -e "$bar" && echo -e "  \033[1;37mdesde su apps (telegram). ingresar al bot!\n  digite el comando \033[1;31m/menu\n  \033[1;37mprueve si tiene acceso al menu extendido." && echo -e "$bar"
+read -p "Presione Enter para continuar "
+bot_gen
+}
+
+start_bot () {
+[[ ! -e "${CIDdir}/token" ]] && echo "null" > ${CIDdir}/token
+unset PIDGEN
+PIDGEN=$(ps aux|grep -v grep|grep "BotGen.sh")
+if [[ ! $PIDGEN ]]; then
+echo -e "[Unit]
+Description=BotGen Service by @ChumoGH
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/root
+ExecStart=/bin/bash ${CIDdir}/BotGen.sh 
+Restart=always
+RestartSec=3s
+
+[Install]
+WantedBy=multi-user.target" > /etc/systemd/system/BotGen-server.service
+
+		systemctl enable BotGen-server &>/dev/null
+    	systemctl start BotGen-server &>/dev/null
+else
+killall BotGen.sh &>/dev/null
+systemctl stop BotGen-server &>/dev/null
+systemctl disable BotGen-server &>/dev/null
+rm /etc/systemd/system/BotGen-server.service &>/dev/null
+clear
+msg -bar3
+echo -e "\033[1;31m            BotGen fuera de linea"
+msg -bar3
+read -p "Presione Enter para continuar "
+fi
+bot_gen
+}
+
+ayuda_fun () {
+clear
+echo -e "$bar"
+echo -e "            \e[47m\e[30m Instrucciones rapidas \e[0m"
+echo -e "$bar"
+echo -e "\033[1;37m   Es necesario crear un bot en \033[1;32m@BotFather "
+echo -e "$bar"
+echo -e "\033[1;32m1- \033[1;37mEn su apps telegram ingrese a @BotFather"
+echo -e "\033[1;32m2- \033[1;37mDigite el comando \033[1;31m/newbot"
+echo -e "\033[1;32m3- @BotFather \033[1;37msolicitara que\n   asigne un nombre a su bot"
+echo -e "\033[1;32m4- @BotFather \033[1;37msolicitara que asigne otro nombre,\n   esta vez deve finalizar en bot eje: \033[1;31mXXX_bot"
+echo -e "\033[1;32m5- \033[1;37mObtener token del bot creado.\n   En \033[1;32m@BotFather \033[1;37mdigite el comando \033[1;31m/token\n   \033[1;37mseleccione el bot y copie el token."
+echo -e "\033[1;32m6- \033[1;37mIngrese el token\n   en la opcion \033[1;32m[1] \033[1;31m> \033[1;37mTOKEN DEL BOT"
+echo -e "\033[1;32m7- \033[1;37mPoner en linea el bot\n   en la opcion \033[1;32m[2] \033[1;31m> \033[1;37mINICIAR/PARAR BOT"
+echo -e "\033[1;32m8- \033[1;37mEn su apps telegram, inicie el bot creado\n   digite el comando \033[1;31m/id \033[1;37mel bot le respondera\n   con su ID de telegran (copie el ID)"
+echo -e "\033[1;32m9- \033[1;37mIngrese el ID en la\n   opcion \033[1;32m[3] \033[1;31m> \033[1;37mID DE USUARIO TELEGRAM"
+echo -e "\033[1;32m10-\033[1;37mcomprueve que tiene acceso a\n   las opciones avanzadas de su bot."
+echo -e "$bar"
+read -p "Presione Enter para continuar "
+bot_gen
+}
+
+call.config () {
+[[ -d /root/resBOT ]] || mkdir /root/resBOT
+local ruta_origen='/etc/ADM-db'
+local ruta_destino='/root/resBOT'
+echo "Respaldando TOKEN y ADMINISTRADOR" 
+for archivo in "$ruta_origen"/*; do
+    if [[ -f "$archivo" ]]; then
+        mv "$archivo" "$ruta_destino/"
+        echo " ARCHIVO $archivo movido a $ruta_destino."
+    fi
+done
+check_ip
+function_verify
+instaled='/etc/ADM-db/sources' && [[ ! -d ${instaled} ]] && download
+}
+
+msj_prueba () {
+
+TOKEN="$(cat /etc/ADM-db/token)"
+ID="$(cat /etc/ADM-db/Admin-ID)"
+
+[[ -z $TOKEN ]] && {
+	clear
+	echo -e "$bar"
+	echo -e "\033[1;37m Aun no a ingresado el token\n No se puede enviar ningun mensaje!"
+	echo -e "$bar"
+	read foo
+} || {
+	[[ -z $ID ]] && {
+		clear
+		echo -e "$bar"
+		echo -e "\033[1;37m Aun no a ingresado el ID\n No se puede enviar ningun mensaje!"
+		echo -e "$bar"
+		read foo m
+	} || {
+		MENSAJE="---------ðŸ“©ð™ˆð™€ð™‰ð™Žð˜¼ð™…ð™€ ð™ð™€ð˜¾ð™„ð˜½ð™„ð˜¿ð™ŠðŸ“©--------\n"
+		MENSAJE+="Esto es un mesaje de prueba!\n"
+		MENSAJE+="$bar\n"
+		URL="https://api.telegram.org/bot$TOKEN/sendMessage"
+		curl -s -X POST $URL -d chat_id=$ID -d text="$MENSAJE" &>/dev/null
+		clear
+		echo -e "---------ðŸ“©ð™ˆð™€ð™‰ð™Žð˜¼ð™…ð™€ ð™ð™€ð˜¾ð™„ð˜½ð™„ð˜¿ð™ŠðŸ“©--------\n"
+		echo -e "\033[1;37m Mensaje enviado Exitosamente...!\n"
+		echo -e "$bar"
+		#sleep 3s
+	}
+}
+
+bot_gen
+}
+
+addnewmss() {
+unset yesno
+unset dnew
+let foc++
+echo -e "$bar"
+echo -e "  \033[1;37mINGRESA EL MENSAJE A ENVIAR"
+echo -e "$bar"
+read -p " $foc TEXTO: " addmss 
+MSS+="$addmss\n"
+echo -e "${cor[3]} Â¿DESEAS AÃ‘ADIR OTRO SMS ? "
+read -p " [S/N]: " -e -i s sshsn
+tput cuu1 && tput dl1
+tput cuu1 && tput dl1
+[[ "$sshsn" = @(s|S|y|Y) ]] && addnewmss
+}
+
+
+
+msj_ind () {
+foc=1
+TOKEN="$(cat /etc/ADM-db/token)"
+echo -e "$bar" 
+echo -e "  \033[1;37mIngrese su ID de telegram a Mensajear"
+echo -e "$bar"
+read -p "ID: " ID 
+[[ -z $ID ]] && ID="$(cat /etc/ADM-db/Admin-ID)"
+[[ -z $TOKEN ]] && {
+	clear
+	echo -e "$bar"
+	echo -e "\033[1;37m Aun no a ingresado el token\n No se puede enviar ningun mensaje!"
+	echo -e "$bar"
+	read foo
+} || {
+	[[ -z $ID ]] && {
+		clear
+		echo -e "$bar"
+		echo -e "\033[1;37m Aun no a ingresado el ID\n No se puede enviar ningun mensaje!"
+		echo -e "$bar"
+		read foo
+	} || {
+		MENSAJE="Hola, Mensale de Prueba del BotGen Generador!"
+echo -e "$bar"
+echo -e "  \033[1;37mINGRESA EL MENSAJE A ENVIAR"
+echo -e "$bar"
+read -p " $foc TEXTO: " addmss 
+MSS+="$addmss\n"
+echo -e "${cor[3]} Â¿DESEAS AÃ‘ADIR OTRO SMS ? "
+read -p " [S/N]: " -e -i s sshsn
+tput cuu1 && tput dl1
+tput cuu1 && tput dl1
+[[ "$sshsn" = @(s|S|y|Y) ]] && addnewmss
+MENSAJE='  ---------ðŸ“©ð™ˆð™€ð™‰ð™Žð˜¼ð™…ð™€ ð™ð™€ð˜¾ð™„ð˜½ð™„ð˜¿ð™ŠðŸ“©--------\n'
+MENSAJE+="$MSS \n "
+echo -e "$bar"
+echo -e "  \033[1;37mPEGA RUTA DE IMAGEN"
+echo -e "$bar"
+read -p "IMG: " img 
+#[[ -z $img ]] && img="https://raw.githubusercontent.com/ChumoGH/ChumoGH-Script/master/favi.png"
+#[[ -z $img ]] && img="/var/www/html/bot_vmess_qr.png"
+[[ -z $MENSAJE ]] && MENSAJE="Hola, Mensale de Prueba del BotGen Generador!"
+		URL="https://api.telegram.org/bot$TOKEN/sendMessage"
+		URG="https://api.telegram.org/bot$TOKEN/sendPhoto"
+		curl -s -X POST $URG -F chat_id=$ID -F photo="@$img" #-F caption="<code>New Script @ChumoGH</code>" #-F width="100" -F height="100"
+		curl -s -X POST $URL -d chat_id=$ID -d text="$(echo -e "$MENSAJE")" &>/dev/null
+#		clear
+		echo -e "@$img"
+		echo -e "$bar"
+		echo -e "\033[1;37m Mensaje enviado Exitosamente...!"
+		echo -e "$bar"
+		read -p "ENTER PARA Continuar"
+	}
+}
+
+bot_gen
+}
+
+
+
+act-bot () {
+[[ -d /root/resBOT ]] || mkdir /root/resBOT
+local ruta_origen="/etc/ADM-db"
+local ruta_destino="/root/resBOT"
+echo "Respaldando TOKEN y ADMINISTRADOR" 
+for archivo in "$ruta_origen"/*; do
+    if [[ -f "$archivo" ]]; then
+        mv "$archivo" "$ruta_destino/"
+        echo " ARCHIVO $archivo RESTALDADO EN $ruta_destino."
+    fi
+done
+download
+}
+
+respon () {
+[[ ! -e /etc/menu_ito ]] && credd=$(cat < /etc/SCRIPT/menu_credito) || credd=$(cat /etc/menu_ito ) 
+[[ -e ${CIDdir}/ress ]] && {
+echo -e "DESACTIVANDO RESELLER $credd FIJO EN BotGEN"
+echo -e "   AHORA SE FIJARA EL NOMBRE DE QUIEN GENERE LA KEY"
+read -p "ENTER PARA VOLVER"
+rm -f ${CIDdir}/ress 
+} || { 
+echo -e "ACTIVANDO RESELLER $credd FIJO EN BotGEN"
+echo -e "AHORA SE FIJARA $credd EN TODAS LAS KEYS "
+read -p "ENTER PARA VOLVER"
+touch ${CIDdir}/ress
+}
+bot_gen
+}
+
+multi(){
+local _numeros=$(ls /etc/systemd/system/BotGen-server*.service |wc -l)
+local count=$(ps x | grep MultiBot.sh | grep -v grep | wc -l)
+msg -bar3
+echo -e " SERVICES BOTS ${_numeros} ACTIVOS ${count}"
+msg -bar3
+echo -e "\033[0;35m[\033[0;36m1\033[0;35m] \033[0;35m> \033[1;34m ADD+ BOTGEN NUEVO ADMIN \033[1;32m "
+echo -e "\033[0;35m[\033[0;36m2\033[0;35m] \033[0;35m> \033[1;33m ACTUALIZAR BINARIO M-BOT \033[1;32m "
+echo -e "\033[0;35m[\033[0;36m3\033[0;35m] \033[0;35m> \033[1;32m VER BOTS EN ACTIVIDAD \033[1;32m "
+echo -e "\033[0;35m[\033[0;36m5\033[0;35m] \033[0;35m> \033[1;31m REMOVER UN ADMINISTRADOR \033[1;32m "
+echo -e "\033[0;35m[\033[0;36m6\033[0;35m] \033[0;35m> \033[1;31m REMOVER TODOS BOTGEN \033[1;32m "
+msg -bar3
+echo -e "\033[0;35m[\033[0;36m0\033[0;35m] \033[0;34m<\033[0;33m SALIR"
+msg -bar3
+local selection=$(selection_fun 13)
+case ${selection} in
+0) return 0 ;;
+1) multiNEW;;
+2) _dowUP;;
+3) _checkBOT;;
+4) stopUNI;;
+esac
+}
+
+_dowUP(){
+#[[ -e /bin/MultiBot.sh ]] || wget -O /bin/MultiBot.sh https://raw.githubusercontent.com/Qm90R2VuIDIwMjQgQ2h1bW9HSCsK/U291cmNlIEJvckdlbiBBRE1jZ2ggQ2h1bW9HSCAyMDI0IFBsdXM-/main/init.M/BotGen.sh
+wget -O /bin/MultiBot.sh https://raw.githubusercontent.com/Qm90R2VuIDIwMjQgQ2h1bW9HSCsK/U291cmNlIEJvckdlbiBBRE1jZ2ggQ2h1bW9HSCAyMDI0IFBsdXM-/main/init.M/BotGen.sh
+[[ -e /bin/MultiBot.sh ]] && chmod +x /bin/MultiBot.sh 
+_restartSERVICES
+}
+
+_checkBOT(){
+local _l=1
+_numeros=$(ls /etc/systemd/system/BotGen-server*.service)
+archivos=()
+systemctl daemon-reload &>/dev/null
+local _line=1
+msg -bar3
+for _service in $(ls /etc/systemd/system/BotGen-server*.service | cut -d '/' -f5) ; do
+ _admS=$(cat /etc/systemd/system/${_service} | grep MultiBot.sh | cut -d ' ' -f6)
+ [[ -z ${_admS} ]] && echo -e " \033[0;35m[\033[0;36m$_line\033[0;35m] \033[0;35m> \033[1;37m  BOT ADMIN ( N/A ) " || echo -e " \033[0;35m[\033[0;36m$_line\033[0;35m] \033[0;35m> \033[1;37m  BOT REVENTA ${_admS} "
+ archivos+=("$_service")  # Agregar el nombre del archivo al array
+ let _line++
+done
+msg -bar3
+read -p " SERVICIO A MOSTRAR: " opcion
+msg -bar3
+[[ -z ${opcion} ]] && return
+# Verificar la selecciÃ³n del usuario y detenerse identificando la posiciÃ³n en el array
+if [ "$opcion" -ge 1 ] && [ "$opcion" -le "${#archivos[@]}" ]; then
+    archivo_a_eliminar="${archivos[$((opcion - 1))]}"
+    echo -e " SELECCIONADO '$archivo_a_eliminar'."
+	[[ -z ${_admS} ]] && {
+	_a3=$(cat /etc/ADM-db/token)
+	_a4=$(cat /etc/ADM-db/Admin-ID)
+	_a5='User-ID'
+	_a6=$(cat /etc/ADM-db/resell)
+	echo -e " TOKEN : $_a3 \n ID : $_a4 \n FILE : $_a5 \n ALIAS : $_a6"
+	} || {
+	_a3=$(cat /etc/systemd/system/${archivo_a_eliminar} | grep MultiBot.sh | cut -d ' ' -f3)
+	_a4=$(cat /etc/systemd/system/${archivo_a_eliminar} | grep MultiBot.sh | cut -d ' ' -f4)
+	_a5=$(cat /etc/systemd/system/${archivo_a_eliminar} | grep MultiBot.sh | cut -d ' ' -f5)
+	_a6=$(cat /etc/systemd/system/${archivo_a_eliminar} | grep MultiBot.sh | cut -d ' ' -f6)
+	echo -e " TOKEN : $_a3 \n ID : $_a4 \n FILE : $_a5 \n ALIAS : $_a6"
+	}
+else
+    echo "OpciÃ³n no vÃ¡lida."
+fi
+read -p "PRESIONE ENTER PARA CONTINUAR"
+bot_gen
+}
+
+_restartSERVICES(){
+local _l=1
+systemctl daemon-reload &>/dev/null
+for _service in $(ls /etc/systemd/system/BotGen-server*.service | cut -d '/' -f5) ; do
+ echo -e "REINICIANDO SERVICIO ${_service}"
+ systemctl restart ${_service} 
+ let _l++
+done
+read -p " ENTER PARA RETORNAR"
+bot_gen
+}
+
+stopUNI(){
+local _l=1
+_numeros=$(ls /etc/systemd/system/BotGen-server*.service)
+archivos=()
+systemctl daemon-reload &>/dev/null
+local _line=1
+msg -bar3
+for _service in $(ls /etc/systemd/system/BotGen-server*.service | cut -d '/' -f5) ; do
+ _admS=$(cat /etc/systemd/system/${_service} | grep MultiBot.sh | cut -d ' ' -f6)
+ echo -e " \033[0;35m[\033[0;36m$_line\033[0;35m] \033[0;35m> \033[1;37m  ELIMINAR $_service ( ${_admS} )"
+ archivos+=("$_service")  # Agregar el nombre del archivo al array
+ let _line++
+done
+msg -bar3
+read -p " SERVICIO A ELIMINAR: " opcion
+msg -bar3
+[[ -z ${opcion} ]] && return
+# Verificar la selecciÃ³n del usuario y detenerse identificando la posiciÃ³n en el array
+if [ "$opcion" -ge 1 ] && [ "$opcion" -le "${#archivos[@]}" ]; then
+    archivo_a_eliminar="${archivos[$((opcion - 1))]}"
+	systemctl disable $archivo_a_eliminar
+	systemctl stop $archivo_a_eliminar
+	rm -f /etc/systemd/system/$archivo_a_eliminar
+    echo "  SE HA SELECCIONADO '$archivo_a_eliminar'."
+    # AquÃ­ irÃ­a el cÃ³digo para eliminar el archivo
+else
+    echo "OpciÃ³n no vÃ¡lida."
+fi
+read -p "PRESIONE ENTER PARA CONTINUAR"
+bot_gen
+}
+
+multiNEW(){
+clear&&clear
+rm -f /bin/MultiBot.sh
+msg -bar3
+tittle
+msg -bar3
+count=$(ps x | grep MultiBot.sh | grep -v grep | wc -l)
+new_number=$((count + 1))
+read -p " INGRESA TU ${new_number} TOKEN : " _tok
+msg -bar3
+read -p " INGRESA TU ${new_number} ID ADMIN: " _ID
+msg -bar3
+read -p " ${new_number} RUTA ( Users${new_number}) : " _usr
+msg -bar3
+read -p " INGRESA TU ${new_number} Alias ADMIN : " _alias
+msg -bar3
+#PIDGEN=$(ps aux|grep -v grep|grep "BotGen.sh")
+#if [[ ! $PIDGEN ]]; then
+[[ -e /bin/MultiBot.sh ]] || wget -O /bin/MultiBot.sh https://raw.githubusercontent.com/Qm90R2VuIDIwMjQgQ2h1bW9HSCsK/U291cmNlIEJvckdlbiBBRE1jZ2ggQ2h1bW9HSCAyMDI0IFBsdXM-/main/init.M/BotGen.sh
+[[ -e /bin/MultiBot.sh ]] && chmod +x /bin/MultiBot.sh 
+echo -e "[Unit]
+Description=MultiBotGen ${new_number} Service by @ChumoGH
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/root
+ExecStart=/bin/bash /bin/MultiBot.sh ${_tok} ${_ID} ${_usr} ${_alias}
+Restart=always
+RestartSec=3s
+
+[Install]
+WantedBy=multi-user.target" > /etc/systemd/system/BotGen-server${new_number}.service
+systemctl enable BotGen-server${new_number} &>/dev/null
+systemctl start BotGen-server${new_number} &>/dev/null
+#else
+#killall BotGen.sh &>/dev/null
+#systemctl stop BotGen-server &>/dev/null
+#systemctl disable BotGen-server &>/dev/null
+#rm /etc/systemd/system/BotGen-server.service &>/dev/null
+#clear
+msg -bar3
+read -p "Presione Enter para continuar "
+#fi
+bot_gen
+}
+
+bot_gen () {
+clear
+unset PID_GEN
+CIDdir=/etc/ADM-db && [[ ! -d ${CIDdir} ]] && mkdir ${CIDdir}
+PID_GEN=$(ps x|grep -v grep|grep "BotGen.sh")
+PID_on=$(ps x|grep -v grep|grep "modelid")
+[[ ! $PID_on ]] && PID_on="\033[1;31mOFF" || PID_on="\033[1;32mON"
+[[ ! -e /etc/systemd/system/btkill.service ]] && PID_kill="\033[1;31mOFF" || PID_kill="\033[1;32mON"
+[[ ! $PID_GEN ]] && PID_GEN="\033[1;31mOFF" || PID_GEN="\033[1;32mON"
+[[ -e ${CIDdir}/token ]] && tk="\033[1;32mOK" || tk="\033[1;31mNULL"
+[[ -e /etc/numctc ]] && nm="\033[1;32mNUM" || nm="\033[1;31mNULL"
+[[ -e /etc/urlDN ]] && dn="\033[1;32mDON" || dn="\033[1;31mNULL"
+[[ -e /etc/urlCT ]] && ct="\033[1;32mCAT" || ct="\033[1;31mNULL"
+#[[ -e ${CIDdir}/Admin-ID ]] && adid="\033[1;32mOK" || adid="\033[1;31mNULL"
+[[ -e ${CIDdir}/Admin-ID ]] && adid="\033[1;32m$(cat ${CIDdir}/Admin-ID)" || adid="\033[1;31mNULL"
+[[ -e ${CIDdir}/ress ]] && rfij="\033[1;32mRESELLER FIJO (Bot Personal )" || rfij="\033[1;31mRESELLER ALEATORIO ( Bot Custom )"
+limcont=$(cat /etc/ADM-db/limit) 
+_UID=$(cat /etc/ADM-db/User-ID|wc -l) 
+[[ ${_UID} < 1 ]] &&  _UID="\033[1;31m${_UID}" || _UID="\033[1;32m${_UID}"
+[[ "${limcont}" = "999" ]] && limted=" >>>" || limted=$(cat /etc/ADM-db/limit)
+msg -bar3
+echo -e " \033[7;49;35m ${TTini} ðŸ² BotGEN ChumoGH${TTcent}ADM ( V2.0 ) ðŸ² â—„â—„<===   \033[0m"
+msg -bar3
+echo -e "  - LIMITADOR \033[1;32m($limted) \033[1;39m|\033[1;37m KILL ID ${PID_kill} \033[1;39m|\033[1;37m UsersID ${_UID} "
+msg -bar3 
+echo -e "\033[0;35m[\033[0;36m1\033[0;35m] \033[0;35m> \033[1;37m TOKEN DEL BOT $tk "
+echo -e "\033[0;35m[\033[0;36m2\033[0;35m] \033[0;35m> \033[1;37m INICIAR/PARAR BOT $PID_GEN\033[0m"
+echo -e "\033[0;35m[\033[0;36m3\033[0;35m] \033[0;35m> \033[1;37m ID ADMIN TELEGRAM  $adid [ $(ls /etc/ADM-db/User-*|wc -l) ]"
+echo -e "\033[0;35m[\033[0;36m4\033[0;35m] \033[0;35m> \033[1;37m Cambiar Contacto -> $(cat < ${CIDdir}/resell)"
+echo -e "\033[0;35m[\033[0;36m5\033[0;35m] \033[0;35m> \033[1;37m MENSAJE DE PRUEBA"
+echo -e "\033[0;35m[\033[0;36m6\033[0;35m] \033[0;36m> \033[1;37m MANUAL De Uso"
+echo -e "\033[0;35m[\033[0;36m7\033[0;35m] \033[0;35m> \033[1;37m Limite de KEYS "
+echo -e "\033[0;35m[\033[0;36m8\033[0;35m] \033[0;35m> \033[1;37m ENLACES $nm | $dn | $ct "
+echo -e "\033[0;35m[\033[0;36m9\033[0;35m] \033[0;35m> \033[1;37m $rfij"
+[[ -e $HOME/RegBOT/API* ]] && {
+echo -e "\033[0;35m[\033[0;36m10\033[0;35m] \033[0;35m> \033[1;37m API  "
+echo -e "             â¤?\033[0;33m$(cat < $HOME/RegBOT/API*)"
+} || echo -e "\033[0;35m[\033[0;36m10\033[0;35m] \033[0;35m> \033[1;37m AGREGAR API ( exe.io/cut.io ) " 
+echo -e "\033[0;35m[\033[0;36m11\033[0;35m] \033[0;35m> \033[1;37m Modificar COSTES DEL BOT"
+echo -e "\033[0;35m[\033[0;36m12\033[0;35m] \033[0;35m> \033[1;37m MENU DE CUPONES \033[1;32m "
+msg -bar3
+echo -e "\033[0;35m[\033[0;36m13\033[0;35m] \033[0;35m> \033[1;31m REMOVER BOTGEN \033[1;32m "
+msg -bar3
+echo -e "\033[0;35m[\033[0;36m0\033[0;35m] \033[0;34m<\033[0;33m SALIR"
+msg -bar3
+selection=$(selection_fun 13)
+case ${selection} in
+0) return 0 ;;
+1) ini_token;;
+2) start_bot;;
+3) ini_id;;
+4) ini_res;;
+5) msj_prueba;;
+6) ayuda_fun;;
+#7) source <(curl -sSL https://www.dropbox.com/s/f5mlwun3hkpq6k8/bot-permited.sh) ;;
+#8) act-bot ;;
+7) lim-bot ;;
+8) change_pay;;
+9) respon;;
+10)
+msg -bar3
+echo -e " AGREGA TU TOKEN SEGUIDO DE UN - CON EL NUMERO \n"
+echo -e "\033[0;35m[\033[0;36m1\033[0;35m] \033[0;35m> \033[1;37m cut.io \033[1;32m "
+echo -e "\033[0;35m[\033[0;36m2\033[0;35m] \033[0;35m> \033[1;37m exe.io \033[1;32m "
+msg -bar3
+echo 
+echo -e "	EJEMPLO : "
+echo -e "		 00z99a886700000x0c-1"
+echo 
+msg -bar3
+read -p "PEGA TU TOKEN API : " apiT
+_apiT="$(echo ${apiT} | cut -d '-' -f1)"
+_POS="$(echo ${apiT} | cut -d '-' -f2)"
+[[ -z ${_POS} ]] || echo -e "${_apiT}" > $HOME/RegBOT/API${_POS}
+[[ $_POS = 1 ]] && rm -f $HOME/RegBOT/API2 || rm -f $HOME/RegBOT/API1
+chmod +x $HOME/RegBOT/API${_POS}
+msg -bar3
+echo -e "TOKEN AÃ‘ADIDO CON EXITO.."
+echo 
+[[ $_POS = 1 ]] && echo -e "TOKEN APLICADO A \033[1;37m cut.io \033[1;32m " || echo -e "TOKEN APLICADO A \033[1;37m exe.io \033[1;32m "
+echo -e " AHORA VE Y GENERA UN ACORTADOR "
+echo -e " DEBERIA APARECERTE EN LA PAGUINA "
+echo 
+echo -e " TOKEN : $(cat < $HOME/RegBOT/API${_POS})"
+echo 
+msg -bar3
+read -p "ENTER PARA RERTORNAR"
+#msj_ind
+;;
+11)edit_cost;;
+12)crear_cupon;;
+13)multi;;
+*) bot_gen;;
+esac
+}
