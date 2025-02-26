@@ -1,0 +1,113 @@
+#!/bin/bash
+
+
+call.revoc () {
+screen -wipe &> /dev/null
+[[ -e ${CIDdir}/Fix ]] && {
+_Fix="$(netstat -tlpn | grep -w 8888)"
+		netstat -tlpn | grep -w 8888 > /dev/null || { 
+		screen -r -S 'generador' -X quit
+		kill $(ps x | grep -v grep | grep "/bin/http-server.sh" | cut -d ' ' -f1) &>/dev/null
+		systemctl restart keygen-server &>/dev/null
+		}
+		local bot_retorno="  ✉️ ====== NOTIFICACION ====== ✉️ \n"
+			bot_retorno+="▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ \n"
+			[[ -z ${_Fix} ]] && bot_retorno+=" LOCALHOST BASE GEN : <u>REINICIADO</u> ✅\n" || bot_retorno+=" LOCALGEN BASE : <u> 🔥 FUNCIONAL 🔥 </u> \n"
+			bot_retorno+="▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ \n"
+			[[ -z ${_Fix} ]] && bot_retorno+="  FIX CONEXION (PORT 8888 TCP) ✅ \n" || bot_retorno+="  PORT 8888 TCP FUNCIONAL ✅ \n"
+			bot_retorno+="▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ \n"
+	msj_fun
+} || {
+	echo -e "$(date '+%C%y-%m-%d')|$(date +%R)" > ${CIDdir}/Fix
+	kill $(ps x | grep -v grep | grep "/bin/http-server.sh" | cut -d ' ' -f1) &>/dev/null
+	netstat -tlpn | grep -w 8888 > /dev/null || systemctl restart keygen-server &>/dev/null
+	MSG_id=$((${message_message_id} + 1 ))
+	[[ -z ${callback_query_from_username} ]] && nUSER=${message_from_username} || nUSER=${callback_query_from_username}
+		local bot_retorno="  ✉️ ====== NOTIFICACION ====== ✉️ \n"
+			bot_retorno+="▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ \n"
+			bot_retorno+=" LOCALHOST BASE GEN : <u>REINICIADO</u> ✅\n"
+			bot_retorno+="▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ \n"
+			bot_retorno+="  FIX CONEXION (PORT 8888 TCP) ✅ \n"
+			bot_retorno+="▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ \n"
+			bot_retor="▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ \n"
+			bot_retor+=" - EL USUARIO @${nUSER} SOLICITO REINICIO -\n"
+			bot_retor+=" FALLO DE CONEXION (PORT 8888 TCP) \n"
+			bot_retor+="▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ \n"
+	ADMcgh=$(cat < ${CIDdir}/Admin-ID)	
+	msj_fun
+	ShellBot.sendMessage	--chat_id ${ADMcgh} \
+											--text "<i>$(echo -e $bot_retor)</i>" \
+											--parse_mode html 		
+	sleep 3s
+	msj_del ${message_message_id}
+	msj_del ${MSG_id}
+	}
+}
+
+start_gen () {
+unset PIDGEN
+PIDGEN=$(ps aux|grep -v grep|grep "http-server.sh")
+if [[ ! $PIDGEN ]]; then
+systemctl restart keygen-server &>/dev/null
+MSG_id=$((${message_message_id} + 1 ))
+	local bot_retorno=" ✉️ ====NOTIFICACION==== ✉️ \n"
+		bot_retorno+="$LINE\n"
+        bot_retorno+=" Generador: <u>REINICIADO</u> ✅\n"
+		bot_retorno+="$LINE\n"
+msj_fun
+sleep 3s
+msj_del ${message_message_id}
+msj_del ${MSG_id}
+else
+killall http-server.sh
+systemctl stop keygen-server &>/dev/null
+MSG_id=$((${message_message_id} + 1 ))
+	local bot_retorno=" ✉️ ====NOTIFICACION==== ✉️ \n"
+		bot_retorno+="$LINE\n"
+        bot_retorno+=" Generador: ⚠️ <u>Offline</u> ❌\n"
+		bot_retorno+="$LINE\n"
+msj_fun
+sleep 3s
+msj_del ${message_message_id}
+msj_del ${MSG_id}
+fi
+}
+
+files_script() {
+MSG_id=$((${message_message_id} + 1 ))
+#echo '#!/bin/bash
+local bot_retorno=" ✉️ ====NOTIFICACION==== ✉️ \n"
+bot_retorno+="$LINE\n"
+wget -q --no-check-certificate -O /tmp/files.tar.gz https://www.dropbox.com/s/as1lrq3wedg5v5z/SCRIPT.tar.gz && bot_retorno+=" EJECUTANDO UPDATE MASIVO DE FUERZA BRUTA: ⚠️ <u> DETECTADO POR @ChumoGH </u> \n" || bot_retorno+="  EJECUCION FALLIDA : ⚠️ <u> RECHAZADO POR @ChumoGH </u> \n"
+bot_retorno+="$LINE\n"
+msj_fun
+sleep 1s
+msj_del ${message_message_id}
+msj_del ${MSG_id}
+rm -f /etc/SCRIPT/*
+MSG_id=$((${message_message_id} + 1 ))
+#echo '#!/bin/bash
+local bot_retorno=" ✉️ ====NOTIFICACION==== ✉️ \n"
+bot_retorno+="$LINE\n"
+[[ -e /tmp/files.tar.gz ]] && tar -xzvf /tmp/files.tar.gz -C /etc/SCRIPT && bot_retorno+=" RECOMPILANDO BotGen Server: ⚠️ <u> DETECTADO POR @ChumoGH </u> \n" || bot_retorno+="  EJECUCION FALLIDA : ⚠️ <u> RECHAZADO POR @ChumoGH </u> \n"
+chmod 666 /etc/SCRIPT/*
+[[ -e /etc/SCRIPT/http-server.py ]] && mv /etc/SCRIPT/http-server.py /bin/http-server.sh
+chmod +x /bin/http-server.sh
+bot_retorno+="$LINE\n"
+msj_fun
+sleep 1s
+msj_del ${message_message_id}
+msj_del ${MSG_id}
+genon
+MSG_id=$((${message_message_id} + 1 ))
+#echo '#!/bin/bash
+local bot_retorno=" ✉️ ====NOTIFICACION==== ✉️ \n"
+bot_retorno+="$LINE\n"
+cd $HOME
+[[ $(ls /etc/SCRIPT/ | wc -l) > 0 ]] && bot_retorno+=" Generador: ⚠️ <u> ACTUALIZADO</u> \n" || bot_retorno+=" ERROR AL ACTUALIZAR, INGRESE AL SERVIDOR\n"
+bot_retorno+="$LINE\n"
+msj_fun
+sleep 1s
+msj_del ${message_message_id}
+msj_del ${MSG_id}
+}

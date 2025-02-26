@@ -1,0 +1,153 @@
+#!/bin/bash
+unset checkPID_GEN
+checkPID_GEN=$(ps x|grep -w "8888"|grep -v grep)
+[[ ! $checkPID_GEN ]] && PID_GEN=' Fail ❌' || PID_GEN=' Check ✅'
+[[ -e /etc/systemd/system/btkill.service ]] && kkid=" ✅" || kkid=" ❌"
+[[ -e /root/RegBOT/IGlobal ]] && _TopGlobal=$(cat < /root/RegBOT/IGlobal) || _TopGlobal='❌ - ❌'
+
+call.terminos() {
+MSG_id=$((${message_message_id} + 1 ))
+[[ -z ${callback_query_from_username} ]] && nUSER=${message_from_username} || nUSER=${callback_query_from_username}
+local SMS=$(curl -sSL "https://raw.githubusercontent.com/Qm90R2VuIDIwMjQgQ2h1bW9HSCsK/U291cmNlIEJvckdlbiBBRE1jZ2ggQ2h1bW9HSCAyMDI0IFBsdXM-/main/source/terminos.txt") 
+	bot_retorno=" =============================================\n"
+	bot_retorno+="  ${SMS}"
+	bot_retorno+=" =============================================\n"
+msj_fun
+sleep 10s
+msj_del ${message_message_id}
+msj_del ${MSG_id}
+}
+
+calcular_tiempo() {
+dias=$1
+DS="DIA'(s)"
+SM="SEMANA'(s)"
+MS="MES'(s)"
+AS="AÑO'(s)"
+
+    if (( $dias == 7 )); then
+        echo "1 SEMANA"
+    elif (( $dias == 14 )); then
+        diasBOT="2 ${SM}"
+    elif (( $dias == 21 )); then
+        diasBOT="3 ${SM}"
+	elif (( $dias == 30 )); then
+        diasBOT="4 ${SM}"
+    elif (( $dias > 30 && $dias <= 37 )); then
+        diasBOT="1 ${MS}, 1 ${SM}"
+    elif (( $dias > 37 && $dias <= 60 )); then
+        diasBOT="2 ${MS}"
+    elif (( $dias > 60 && $dias <= 90 )); then
+        diasBOT="3 ${MS}"
+    elif (( $dias > 90 && $dias <= 365 )); then
+        meses=$(( $dias / 30 ))
+		diasBOT="$meses ${MS}"
+    elif (( $dias > 365 )); then
+        anios=$(( $dias / 365 ))
+		diasBOT="$anios ${AS}"
+    else
+        diasBOT="$dias ${DS}"
+    fi
+}
+
+menu_src () {
+local _fecha=`date +%d-%m-%y`
+local _hora=$(date +"%H:%M:%S") 
+#namcli=$(bash /etc/ADM-db/BotGen.sh | grep  message_from_first_name | grep message_from_first_name | grep -i message_from_first_name | awk {'print $4'})
+#${message_text[$usuario]}  $message_from_first_name $message_from_last_name
+[[ -z ${callback_query_from_username} ]] && nUSER=${message_from_username} || nUSER=${callback_query_from_username}
+bot_retorno="  ✨ BIENVENIDO A ADMcgh/ChumoGH($(cat < /etc/SCRIPT/v-local.log)) ✨\n"
+	 if [[ $(echo $permited|grep "${chatuser}") = "" ]]; then
+		 if [[ $(cat ${CID}|grep "${chatuser}") = "" ]]; then
+		 [[ -z $(cat /root/RegBOT/banID | grep -w ${chatuser}) ]] && {
+		 #[[ -z "$(echo -e "${idBAN}" | grep -w "${chatuser}")" ]] && {
+		 	 bot_retorno+=" ──── · · · ──── ꒰ ꒱ ──── · · · ──── \n"
+			 bot_retorno+="  TOTAL DE INSTALL GLOBALES ( ${_TopGlobal} ) ✨\n"
+		 	 bot_retorno+=" =============================================\n"
+			 bot_retorno+="  SU 🆔 : <code>${chatuser}</code> NO ESTA AUTORIZADO 🚫"
+			 bot_retorno+=" =============================================\n"
+			 bot_retorno+=" | ⏰ HORA : ${_hora} - | - 📅 FECHA : ${_fecha} \n"
+			 bot_retorno+=" | HOLA @${nUSER} UD NO ESTA AUTORIZADO \n"
+			 bot_retorno+=" | SELECCIONA UN OPCION DE ABAJO !!!    \n"
+			 bot_retorno+=" =============================================\n"
+			 bot_retorno+=" RECLAMAR/CANJEAR CUPON /cupon \n"
+			 bot_retorno+=" =============================================\n"
+			 bot_retorno+=" ⚕️ APLICA TERMINOS Y CONDICIONES! /term⚕️ \n"
+			 bot_retorno+=" =============================================\n"
+			 menu_printSN
+			 } || invalido_fun
+		#	 menu_printSN
+			 #msj_fun
+		 else
+		 	[[ -e /etc/menu_ito ]] && nomkey="$(cat /etc/menu_ito)" || nomkey='@ChumoGH - OFFICIAL'
+		 	numkey_used=$(grep -o -i $message_chat_id /etc/gerar-sh-log | wc -l)
+			numkey_gen=$(grep -o -i $message_chat_id /etc/ADM-db/num-key.cont | wc -l)
+			data_user=$(cat ${CID}|grep "${chatuser}" | awk -F "|" '{print $2}')
+			data_sec=$(date +%s)
+			data_user_sec=$(date +%s --date="$data_user")
+			variavel_soma=$(($data_user_sec - $data_sec))
+			dias_use=$(($variavel_soma / 86400))
+			[[ "$dias_use" -le 0 ]] && dias_use=0 || dias_use=$(($dias_use + 1))
+			calcular_tiempo $dias_use
+			bot_retorno+=" ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ \n"
+			 bot_retorno+=" 🔥 TIENE ACCESO POR ${diasBOT} 🔥 \n" #  ✓ INCLUIDO TU RESELLER EN LA KEY ✔\n"
+			 bot_retorno+=" ✩ AUTORIZACION VALIDA HASTA $data_user ⌚\n" #$(date +%R)
+			 [[ -z $checkPID_GEN ]] && bot_retorno+=" ⚠️ ADVERTENCIA!! SerFTP COLAPZADO ⚠️\n" || bot_retorno+="  SerFTP 🌎 Enlace Conectado 🔗\n"
+			 [[ -z ${callback_query_from_first_name} ]] && firsnme="${message_from_first_name}" || firsnme="${callback_query_from_first_name}"
+			 [[ -z ${callback_query_from_last_name} ]] && lastnme="${message_from_last_name}" || lastnme="${callback_query_from_last_name}"
+			 bot_retorno+=" | ⏰ HORA : ${_hora} - | - 📅 FECHA : ${_fecha} \n"
+			 bot_retorno+=" ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ \n"
+			 bot_retorno+=" RESELLER ACTUAL : ${firsnme} ${lastnme}\n"
+			 bot_retorno+=" ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ \n"
+			 bot_retorno+=" MENU DEL BOT▬▬▬▬▬▬▬▬► /menu  \n"
+			 bot_retorno+=" LINK DE SCRIPT▬▬▬▬▬▬▬▬▬► /instal \n"
+			 #bot_retorno+=" INSTALL REMOTO▬▬▬▬▬▬▬▬▬► /remote \n"
+			 bot_retorno+=" GENERAR KEY ChumoGH▬▬▬▬► /keygen\n"
+[[ $(cat ${CID} | grep -w ${nombrevalue} | cut -d '|' -f3) = "true" ]] && bot_retorno+=" GENERAR LATAM (BETA)▬▬▬► /kltm  \n"
+			 bot_retorno+=" INSTRUCCIONES DEL BOT▬▬► /ayuda \n"
+			 bot_retorno+=" REINCIAR HUESPED DE BOT▬▬► /restart \n"
+			 bot_retorno+=" ADD DOMAIN CLOUDFLARE▬▬► /domainA /domainNS\n"
+			 bot_retorno+=" ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ \n"
+			 bot_retorno+="  TOTAL DE INSTALL GLOBALES ( ${_TopGlobal} ) ✨\n"
+			 #bot_retorno+=" ❊ 𝚁𝚎𝚌𝚞𝚎𝚛𝚍𝚊 𝙲𝚘𝚕𝚊𝚋𝚘𝚛𝚊𝚛 💸💰 , 𝚜𝚒 𝚝𝚎 𝚊𝚐𝚛𝚊𝚍𝚘 𝚖𝚒 𝚃𝚛𝚊𝚋𝚊𝚓𝚘 ❊\n"
+			 bot_retorno+=" Inconvenientes con el Bot Contactame : +$(cat < /etc/numctc) 📲\n"
+			 bot_retorno+=" 🔐 『 $numkey_used 』𝙆𝙚𝙮𝙨 𝙐𝙨𝙖𝙙𝙖𝙨 🔓,『 $numkey_gen 』𝙆𝙚𝙮𝙨 𝙂𝙚𝙣𝙚𝙧𝙖𝙙𝙖𝙨 🗝️ \n"
+			 bot_retorno+=" ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ \n"
+			 menu_print
+		 fi
+		 
+	 else
+		 unset usadas
+		 usadas="$(cat /etc/http-instas)"
+		 [[ ! $usadas ]] && k_used="0" || k_used="${usadas}"
+		 bot_retorno+=" | GENERADOR WEB FILE : ${PID_GEN} \n"
+		 bot_retorno+=" | ⏰ HORA : ${_hora} - | - 📅 FECHA : ${_fecha} \n"
+		 bot_retorno+=" ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ \n"
+		 bot_retorno+="  TOTAL DE INSTALL GLOBALES ( ${_TopGlobal} ) ✨\n"
+		 bot_retorno+=" ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ \n"
+		 #bot_retorno+="/infosys	>> 	INFORMACION DEL VPS \n"
+		 #bot_retorno+="/killid	>> 	LIMITADOR DE CADUCIDAD ${kkid}\n"
+		 #bot_retorno+="/idgen	>> 	LISTA DE ID + GENERADAS\n"
+		 bot_retorno+="/banID	>> 	BANEAR ID PARA EL BOT\n"
+		 bot_retorno+="/Uban	>> 	DESBANEAR ID PARA EL BOT\n"
+		 bot_retorno+="/chat	>> 	MENSAJE PERSONAL A ID\n"
+		 bot_retorno+="/buscar	>> 	BUSCAR ID AUTORIZADO\n"
+		 bot_retorno+="/kltm	>> 	Key SCRIPT LATAM \n"
+		 #bot_retorno+="/addrev	>> 	AÑADIR UN REVENDEDOR \n"
+		 bot_retorno+="/ayuda	>>	INSTRUCCIONES DE COMANDOS \n"
+		 bot_retorno+="/cache	>>	OPTIMIZA SERVIDOR \n"
+		 bot_retorno+="/update	>>	ACTUALIZA FILES BotGen \n"
+		 bot_retorno+="/reboot	>>	REINICIA SERVIDOR VPS \n"
+		 bot_retorno+="/Cprecios   >> CAMBIAR PRECIOS DE BOT\n"
+		 bot_retorno+="/ccupon   >> CREAR CUPON PARA CANJEAR\n"
+		 #bot_retorno+="/donar	>> ACTIVA O DESACTIVA EL MENSAJE DONATIVO \n"
+		 bot_retorno+=" ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ \n"
+		 bot_retorno+=" ADD DOMAIN CLOUDFLARE--► /domainA /domainNS\n"
+		 bot_retorno+=" ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ \n"
+		 menu_print
+		 #bot_retorno=" ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ \n"
+		 #bot_retorno+=" AÑADIR REVENDEDORES [ FUNCION BETA ]\n"
+		 #bot_retorno+=" ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ \n"
+		 #call.botonADDrev
+	 fi	
+}
