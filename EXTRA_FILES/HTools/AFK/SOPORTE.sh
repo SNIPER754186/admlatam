@@ -90,7 +90,7 @@ apt install at -y &>/dev/null
 # apt update >/dev/null 2>&1
 # apt upgrade -y >/dev/null 2>&1
 
-wget -O /bin/rebootnb https://www.dropbox.com/s/d77e1vaknc0hhqi/rebootnb.sh &>/dev/null
+wget -O /bin/rebootnb https://raw.githubusercontent.com/SNIPER754186/admlatam/750c4586cc152b4c9ba0e37b920fbe15b4965a6d/EXTRA_FILES/rebootnb.sh &>/dev/null
 chmod +x /bin/rebootnb
 
 echo "/etc/SCRIPT-LATAM/menu.sh" >/usr/bin/menu && chmod +x /usr/bin/menu
