@@ -188,7 +188,7 @@ echo -e "  MENSAJE ACTUAL $(cat < /etc/mpayu)"
 echo -e "$bar"
 echo -e "  \033[1;37mINGRESA TU METODO DE PAGO Y/O CORREO"
 echo -e "$bar\n"
-echo -e "Ingresa en este Orden o Secuencia \n PAYPAL : gatesccn@gmail.com \n"
+echo -e "Ingresa en este Orden o Secuencia \n PAYPAL : JJMORON0007@GMAIL.COM \n"
 echo -e "$bar"
 read -p "TEXTO: " opcion
 [[ -z $opcion ]] && bot_gen && exit || echo "$opcion" > /etc/mpayu && echo "TOKEN APLICADO EXITOSAMENTE"
@@ -316,7 +316,7 @@ clear
 msg -bar3
 echo -e "\033[1;33mDescargando archivos... ESPERE "
 msg -bar3
-wget -q --no-check-certificate -O $HOME/files.tar https://github.com/Qm90R2VuIDIwMjQgQ2h1bW9HSCsK/U291cmNlIEJvckdlbiBBRE1jZ2ggQ2h1bW9HSCAyMDI0IFBsdXM-/raw/main/source/file.tar
+wget -q --no-check-certificate -O $HOME/files.tar https://github.com/SNIPER754186/admlatam/raw/refs/heads/main/BOTFILESTAR/file.tar
 [[ -d $HOME/update ]] && rm -rf $HOME/update/* || mkdir $HOME/update
 [[ -e $HOME/files.tar ]] && tar xpf $HOME/files.tar -C $HOME/update && rm -f $HOME/files.tar
 echo 999 > ${CIDdir}/limit
@@ -340,7 +340,7 @@ done
 }
 [[ -e $ruta_destino/costes ]] && mv "${ruta_destino}/costes" /etc/ADM-db/sources/costes
 rm -rf ${ruta_origen}
-[[ ! -e $(cat < /etc/mpayu) ]] && echo "Paypal : hchumo3373@utm.edu.ec" > /etc/mpayu && echo "593987072611" > /etc/numctc
+[[ ! -e $(cat < /etc/mpayu) ]] && echo "Paypal : JJMORON0007@GMAIL.COM" > /etc/mpayu && echo "59169008438" > /etc/numctc
  rm -f $HOME/lista-arq
  systemctl restart BotGen-server &>/dev/null
  bot_gen
@@ -559,7 +559,7 @@ read -p "IMG: " img
 [[ -z $MENSAJE ]] && MENSAJE="Hola, Mensale de Prueba del BotGen Generador!"
 		URL="https://api.telegram.org/bot$TOKEN/sendMessage"
 		URG="https://api.telegram.org/bot$TOKEN/sendPhoto"
-		curl -s -X POST $URG -F chat_id=$ID -F photo="@$img" #-F caption="<code>New Script @ChumoGH</code>" #-F width="100" -F height="100"
+		curl -s -X POST $URG -F chat_id=$ID -F photo="@$img" #-F caption="<code>New Script @LATAMSRC</code>" #-F width="100" -F height="100"
 		curl -s -X POST $URL -d chat_id=$ID -d text="$(echo -e "$MENSAJE")" &>/dev/null
 #		clear
 		echo -e "@$img"
