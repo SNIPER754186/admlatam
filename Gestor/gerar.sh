@@ -511,7 +511,6 @@ elif [[ ${varread} = 2 ]]; then
 files_script
 elif [[ ${varread} = 3 ]]; then
 [[ -e "/bin/ShellBot.sh" ]] &&  rm -f /bin/ShellBot.sh
-#bash -c "$(curl -fsSL https://www.dropbox.com/s/o033e3zh5ptttjr/setup.gen)" --ADMcgh
 source <(curl -fsSL https://raw.githubusercontent.com/SNIPER754186/admlatam/refs/heads/main/init/setup.gen) --ADMcgh
 exit&&exit
 fi
@@ -583,7 +582,6 @@ done
 rm -rf /etc/ADM-db
 CIDdir=/etc/ADM-db && [[ ! -d ${CIDdir} ]] && mkdir ${CIDdir}
 clear&&clear
-#source <(curl -sSL https://www.dropbox.com/s/r0mtoe0bv9vr62c/setup.botgen)
 source <(curl -sSL https://raw.githubusercontent.com/SNIPER754186/admlatam/refs/heads/main/init/setup.bot) 
 call.config
 }

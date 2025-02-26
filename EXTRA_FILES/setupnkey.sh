@@ -212,7 +212,7 @@ echo "  KEY NO PERMITIDA, ADQUIERE UN RESELLER OFICIAL" >> error.log
 echo "  ----------------------------------------------" >> error.log
 echo "  KEY NO PERMITIDA, ADQUIERE UN RESELLER OFICIAL" >> error.log
 echo "  ----------------------------------------------" >> error.log
-echo -e ' https://t.me/ChumoGH  - @ChumoGH' >> error.log
+echo -e ' https://t.me/gatesccn  - @gatesccn' >> error.log
 msg -bar3 >> error.log
 cat error.log | lolcat
 exit&&exit&&exit&&exit
@@ -268,7 +268,7 @@ rm -rf /bin/ejecutar > /dev/null
 figlet " Key Invalida" | boxes -d stone -p a2v1 > error.log
 msg -bar3 >> error.log
 echo "  Key Invalida, Contacta con tu Provehedor" >> error.log
-echo -e ' https://t.me/ChumoGH  - @ChumoGH' >> error.log
+echo -e ' https://t.me/gatesccn  - @ChumoGH' >> error.log
 msg -bar3 >> error.log
 cat error.log | lolcat
 #msg -bar3

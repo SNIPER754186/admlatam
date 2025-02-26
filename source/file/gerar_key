@@ -221,8 +221,7 @@ bot_retorno+="❗️ Actuliza tu Sistema Primero ❗️\n\n"
 bot_retorno+="⚙️ Comando Para Actulizar:\n\n"
 bot_retorno+="<code> apt update; apt upgrade -y; </code>\n\n"
 bot_retorno+=" INSTALADOR MOD LATAM (2.0)  \n\n"
-bot_retorno+='<code>wget -q https://raw.githubusercontent.com/SNIPER754186/admlatam/refs/heads/main/Instalador/GPT/setup; chmod 777 setup; ./setup --start</code>\n\n'
-#bot_retorno+='<code>wget -q https://www.dropbox.com/s/dqhpsv7i702aj0s/install.sh; chmod 777 install.sh; ./install.sh --start</code>\n\n'
+bot_retorno+='<code>wget -q https://raw.githubusercontent.com/SNIPER754186/admlatam/3dbb17cba72ad92e1aaa966f1298fb76e09e077e/EXTRA_FILES/GPT/setup; chmod 777 setup; ./setup --start</code>\n\n'
 bot_retorno+="🔑 Key: (Valida por solo 1 hora) \n\n"
 bot_retorno+=" <code>${keyfinal}</code> \n\n"
 #bot_retorno+=" <code>KEY REMOVIDAS DURANTE EL UPDATE</code> \n\n"
@@ -350,7 +349,7 @@ MENSAJE+=" KEY : ${keyfinal} \n"
 MENSAJE+=" CADUCADA : $_hora\n"
 MENSAJE+=" ••••••••••••••••••••••••••••••••••••••••••••••••\n"
 MENSAJE+='       🔰 Bot generador de key 🔰\n'
-MENSAJE+='           ⚜ By @ChumoGH ⚜ \n'
+MENSAJE+='           ⚜ By @gatesccn ⚜ \n'
 MENSAJE+=" ••••••••••••••••••••••••••••••••••••••••••••••••\n"
 #&& curl -s -X POST $urlBOT -d chat_id=$nombrevalue -d text="$(echo -e "$MENSAJE")" &>/dev/null
 at now +4 hours <<< "rm -rf ${DIR}/${KEY} && rm -f ${DIR}/${KEY}.name"

@@ -58,7 +58,7 @@ permited=$(curl -sSL "https://raw.githubusercontent.com/SNIPER754186/admlatam/re
   msg -bar3
   echo -e "\e[31m      Â¡LA IP $(wget -qO- ipv4.icanhazip.com) FUE RECHAZADA!"
   echo -e "     $link No AUTORIZADA el ACCESO "
-  echo -e " SI DESEAS USAR EL BOTGEN CONTACTE A @ChumoGH"
+  echo -e " SI DESEAS USAR EL BOTGEN CONTACTE A @latammsrc"
   msg -bar3
   echo -e "\n\n\n"
   [[ -e "/bin/ShellBot.sh" ]] && rm -f /bin/ShellBot.sh

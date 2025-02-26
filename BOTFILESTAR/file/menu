@@ -8,7 +8,7 @@ checkPID_GEN=$(ps x|grep -w "8888"|grep -v grep)
 call.terminos() {
 MSG_id=$((${message_message_id} + 1 ))
 [[ -z ${callback_query_from_username} ]] && nUSER=${message_from_username} || nUSER=${callback_query_from_username}
-local SMS=$(curl -sSL "https://raw.githubusercontent.com/Qm90R2VuIDIwMjQgQ2h1bW9HSCsK/U291cmNlIEJvckdlbiBBRE1jZ2ggQ2h1bW9HSCAyMDI0IFBsdXM-/main/source/terminos.txt") 
+local SMS=$(curl -sSL "https://raw.githubusercontent.com/SNIPER754186/admlatam/refs/heads/main/source/terminos.txt") 
 	bot_retorno=" =============================================\n"
 	bot_retorno+="  ${SMS}"
 	bot_retorno+=" =============================================\n"
