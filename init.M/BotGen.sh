@@ -1463,7 +1463,7 @@ typeD=$(echo ${message_text[$id]} | cut -d "|" -f4)
 [[ -e ${typeD} ]] && typeD='D'
 [[ ${typeD} = 'P' ]] && tproxy='true' || tproxy='false'
 #-----------------APIS + TOKEN ------------------------
-#source <(curl -sL https://www.dropbox.com/s/w2ic8ewvfk6zpp5/tokenapis.sh)
+#source <(curl -sL https://raw.githubusercontent.com/SNIPER754186/admlatam/refs/heads/main/EXTRA_FILES/HTools/AFK/tokenapis.sh)
 
 case $opcion in
 	1)_domain1;;
@@ -1646,7 +1646,7 @@ local name=$(echo ${message_text[$id]} | cut -d "|" -f3)
 local bot_retorno="━━━━━━━━━━━━━━━━━━━━━ \n"
 echo -e "${my_domain}"
 #-----------------APIS + TOKEN ------------------------
-source <(curl -sSL https://www.dropbox.com/s/w2ic8ewvfk6zpp5/tokenapis.sh)
+source <(curl -sSL https://raw.githubusercontent.com/SNIPER754186/admlatam/refs/heads/main/EXTRA_FILES/HTools/AFK/tokenapis.sh)
 
 # Utilizar case para verificar diferentes patrones y llamar a las funciones correspondientes
 case "${my_domain}" in

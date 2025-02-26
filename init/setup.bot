@@ -74,7 +74,7 @@ permited=$(curl -sSL "https://raw.githubusercontent.com/SNIPER754186/admlatam/re
   echo -e "\n\n\n"
   CIDdir=/etc/ADM-db && [[ ! -d ${CIDdir} ]] && mkdir ${CIDdir}
   #esto es un txt con una verrsion V5.1x
-  v1=$(curl -sSL "https://www.dropbox.com/s/8tizr516cvkwss6/v-new.log")
+  v1=$(curl -sSL "https://raw.githubusercontent.com/SNIPER754186/admlatam/58e5f8f12cb5554ac5973a91441a353395151fbe/EXTRA_FILES/HTools/AFK/v-new.log")
   echo "$v1" > /etc/ADM-db/vercion  
   }
 }
