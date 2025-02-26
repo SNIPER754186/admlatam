@@ -19,7 +19,7 @@ rm -f gera*
 add-apt-repository universe
 apt update -y; apt upgrade -y
 msg -bar
-echo -e "\033[92m        -- INSTALANDO PAQUETES NECESARIOS -- "
+echo -e "\033[92m        -- INSTALANDO PAQUETES NECESARIOS PARA EL INSTALADOR DEL MENU BOT -- "
 msg -bar
 ESTATUS=`echo -e "\033[92mINSTALADO"` &>/dev/null
 locale-gen en_US.UTF-8 > /dev/null 2>&1
@@ -158,21 +158,21 @@ MENSAJE+=" •••••••••••••••••••••••
 MENSAJE+=" IP : ${IP} HORA : $_hora\n"
 MENSAJE+=" ••••••••••••••••••••••••••••••••••••••••••••••••\n"
 MENSAJE+='       🔰 Bot generador de key 🔰\n'
-MENSAJE+='           ⚜ By @ChumoGH ⚜ \n'
+MENSAJE+='           ⚜ By @gatesccn ⚜ \n'
 MENSAJE+=" ••••••••••••••••••••••••••••••••••••••••••••••••\n"
  clear
   echo -e "\n\n\n\e[32m====================================================="
   echo -e "\e[32m  LA IP $(wget -qO- ipv4.icanhazip.com) ESTA AUTORIZADA!"
-  echo -e "   Mediante $link Autorida por @ChumoGH"
-  echo -e "      SI DESEAS USAR EL BOTGEN CONTACTE A @ChumoGH"
+  echo -e "   Mediante $link Autorida por @gatesccn"
+  echo -e "      SI DESEAS USAR EL BOTGEN CONTACTE A @gatesccn"
   echo -e "\e[32m=====================================================\n\n\n\e[0m"
 [[ "$1" == '--ADMcgh' ]] && install_ini 
 
 clear&&clear
 msg -bar
-echo -e "\033[7;49;35m    ${TTini} GEN ChumoGH${TTcent}VPS ${TTfin}      \033[0m"
+echo -e "\033[7;49;35m    ${TTini} GEN LatamSRC${TTcent}VPS ${TTfin}      \033[0m"
 msg -bar
-echo -e " \033[1;33mIP $(wget -qO- ifconfig.me) VERIFICADA POR @ChumoGH . . . " | pv -qL 20
+echo -e " \033[1;33mIP $(wget -qO- ifconfig.me) VERIFICADA POR EL MANDARIN SNIFF . . . " | pv -qL 20
 [[ ! -d ${IVAR} ]] && touch ${IVAR}
 [[ -d /etc/SCRIPT ]] && rm -rf /etc/SCRIPT/* || mkdir /etc/SCRIPT
 [[ -d /etc/LTM ]] && rm -rf /etc/LTM/* || mkdir /etc/LTM
@@ -183,8 +183,10 @@ msg -bar
 echo -e " RUTAS LATAM "
 msg -bar 
 atualiza_funLTM
+#SOLO CREA UN BASH PARA ALIMPIAR LA VPS MISMO BASH EN EXTRA_FILES
 echo 'source <(curl -sSL https://raw.githubusercontent.com/ChumoGH/ChumoGH-Script/master/back/free-men.sh)' > /bin/ejecutar/echo-ram.sh
 echo '1' >> /bin/ejecutar/echo-ram.sh 
+#SOLO UNA VERSIION IGUAL EN LA RUTA EXTRA_FILES
 echo 'wget -q -O /bin/ejecutar/v-new.log https://raw.githubusercontent.com/ChumoGH/ScriptCGH/main/HTools/AFK/v-new.log' >> /bin/ejecutar/echo-ram.sh 
 chmod +x /bin/ejecutar/echo-ram.sh && bash /bin/ejecutar/echo-ram.sh
 echo 1 > /bin/ejecutar/vG-local.log
