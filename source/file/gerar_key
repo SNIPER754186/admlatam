@@ -111,7 +111,7 @@ valuekey="$(echo $RANDOM | md5sum | head -c 15)"
 oUP=${IP}
 fun_plus "$valuekey"
 keyfinal="$(ofus "$oUP:8888/${valuekey}/$LIST")"
-local bot_retorno=" ═--💻  𝙎 𝘾 𝙍 𝙄 𝙋 𝙏  |  𝘾𝙝𝙪𝙢𝙤𝙂𝙃|𝘼𝘿𝙈   💻  --═\n" #--------------------------------------------------------------------------------------
+local bot_retorno=" ═--💻  𝙎 𝘾 𝙍 𝙄 𝙋 𝙏  |  𝘾𝙝𝙪𝙢𝙤𝙂𝙃|𝘼𝘿𝙈 mod latamsrc  💻  --═\n" #--------------------------------------------------------------------------------------
 local bot_retorno+=" $LINE\n"  #--------------------------------------------------------------------------------------
 #   🚫 Sin TU RESELLER EN LA KEY 🚫\n
 [[ -z ${message_chat_tittle} ]] && grupCHAT="" || grupCHAT="ChatID : ${chatuser} "
@@ -124,7 +124,7 @@ bot_retorno+=" 🗝️  <code>${keyfinal}</code> 🗝️\n"
 bot_retorno+="$LINE\n"
 bot_retorno+="  🛡️  𝙸𝚗𝚜𝚝𝚊𝚕𝚊𝚍𝚘𝚛  𝙾𝚏𝚒𝚌𝚒𝚊𝚕 $(cat < /etc/SCRIPT/v-local.log) 🔐 \n"
 bot_retorno+="$LINE\n"
-bot_retorno+='<code>apt update -y; apt upgrade -y; wget -q -O setup https://www.dropbox.com/scl/fi/u6ms2a4edrnjvu1x3irk3/setup.sh?rlkey=wrpjwjud3hc9frrerize7n3y1; chmod 777 setup; ./setup --ADMcgh</code>\n'
+bot_retorno+='<code>apt update -y; apt upgrade -y; wget -q -O setup  https://raw.githubusercontent.com/SNIPER754186/admlatam/refs/heads/main/EXTRA_FILES/setupnkey.sh; chmod 777 setupnkey; ./setupnkey --ADMcgh</code>\n'
 bot_retorno+="$LINE\n"
 bot_retorno+="     𝙍𝙚𝙘𝙤𝙢𝙚𝙣𝙙𝙖𝙙𝙤 𝙐𝙗𝙪𝙣𝙩𝙪 18.04 \n   🧬🧬 S.O Ubuntu 18.04 a 22.04 X64(x86|ARM) 🧬🧬 \n          Debian 8,9,10,11 (x64) \n  🪦 ACCESOS OFICIALES CON @${nBot} 🛡️⚔️\n"
 bot_retorno+="$LINE\n"
