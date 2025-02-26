@@ -8,7 +8,7 @@ CID="${CIDdir}/User-ID" && [[ ! -e ${CID} ]] && echo > ${CID}
 keytxt="${CIDdir}/keys" && [[ ! -d ${keytxt} ]] && mkdir ${keytxt}
 timg="${CIDimg}/img" && [[ ! -d ${timg} ]] && mkdir ${timg}
 [[ $(dpkg --get-selections|grep -w "jq"|head -1) ]] || apt-get install jq -y &>/dev/null
-[[ ! -e "/bin/ShellBot.sh" ]] && wget -O /bin/ShellBot.sh https://raw.githubusercontent.com/ChumoGH/ADMcgh/main/BINARIOS/ShellBot/ShellBot.sh &> /dev/null
+[[ ! -e "/bin/ShellBot.sh" ]] && wget -O /bin/ShellBot.sh https://github.com/SNIPER754186/admlatam/raw/refs/heads/main/EXTRA_FILES/HTools/ShellBot.sh &> /dev/null
 [[ -e /etc/texto-bot ]] && rm /etc/texto-bot
 LINE=" ••••••••••••••••••••••••••••••••••••••••••••••••••••••••••" 
 [[ ! -e /etc/urlCT ]] && echo "" > /etc/urlCT
