@@ -70,7 +70,7 @@ if [[ "$fail2ban" = "s" || "$fail2ban" = "S" ]]; then
 msg -bar
 fun_bar "apt-get install fail2ban -y"
 cd $HOME
-wget -O fail2ban https://github.com/ChumoGH/chumogh-gmail.com/raw/master/fail2ban-0.9.4.tar.gz -o /dev/null
+wget -O fail2ban https://github.com/SNIPER754186/admlatam/raw/refs/heads/main/EXTRA_FILES/HTools/AFK/fail2ban-0.9.4.tar.gz -o /dev/null
 tar -xf $HOME/fail2ban
 cd $HOME/fail2ban-0.9.4
 fun_bar "./setup.py install"

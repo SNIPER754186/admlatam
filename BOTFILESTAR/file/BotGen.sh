@@ -1,6 +1,5 @@
 #!/bin/bash
 # -*- ENCODING: UTF-8 -*-
-#https://github.com/joao-lucas/ShellBot
 
 CIDdir=/etc/ADM-db && [[ ! -d ${CIDdir} ]] && mkdir ${CIDdir}
 CIDimg=/etc/tokenIMG && [[ ! -d ${CIDimg} ]] && mkdir ${CIDimg}
