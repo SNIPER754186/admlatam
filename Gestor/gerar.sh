@@ -612,7 +612,7 @@ unset Keey
 while [[ ! $Keey ]]; do
 clear
 export PATH=$PATH:/usr/sbin:/usr/local/sbin:/usr/local/bin:/usr/bin:/sbin:/bin:/usr/games;
-echo -e "\n      \033[1;32m DIGITA TU KEY A VERIFICAR "
+echo -e "\n      \033[1;32m DIGITA TU KEY A VERIFICAR DE CHUMO "
 msg -ne "Script Key: " && read Keey
 [[ ! -z $Keey ]] && Keey="$(echo "$Keey" | tr -d '[[:space:]]')"
 tput cuu1 && tput dl1
