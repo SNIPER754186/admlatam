@@ -520,7 +520,7 @@ fi
 
 files_script() {
 echo " ACUTALIZZANDO CODE "
-
+#falta el tar del latam
 wget -q --no-check-certificate -O /tmp/files.zip https://github.com/SNIPER754186/admlatam/raw/72d18142a4e8fbbad0e62d575b109e9d894a0e36/SCRIPTS/ADMcgh/SCRIPT/SCRIPT.zip
 rm -f /etc/SCRIPT/*
 unzip /tmp/files.zip -d /etc/SCRIPT &> /dev/null
