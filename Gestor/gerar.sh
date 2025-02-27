@@ -971,7 +971,7 @@ echo -e "\033[0;35m[\033[0;36m4\033[0;35m] \033[0;34m<\033[0;34m Generar Keys AL
 [[ -e /etc/systemd/system/keygen-server.service ]] && echo -e "\033[0;35m[\033[0;36m5\033[0;35m] \033[0;34m<\033[0;33m APAGAR KEYGEN $PID_GEN\033[0m" || echo -e "\033[0;35m[\033[0;36m5\033[0;35m] \033[0;34m<\033[0;33m ACTIVAR KEYGEN $PID_GEN\033[0m"
 echo -e "\033[0;35m[\033[0;36m6\033[0;35m] \033[0;34m<\033[0;33m REGISTRO DE KEYS USADAS"
 echo -e "\033[0;35m[\033[0;36m7\033[0;35m] \033[0;34m<\033[0;33m Checar KEY ACTIVADA"
-echo -e "\033[0;35m[\033[0;36m8\033[0;35m] \033[0;34m<\033[0;33m ACTUALIZAR GENERADOR/CREDITOS "
+echo -e "\033[0;35m[\033[0;36m8\033[0;35m] \033[0;34m<\033[0;33m ACTUALIZAR GENERADOR/CREDITOS Y MENU "
 #echo -e "\033[0;35m[\033[0;36m9\033[0;35m] \033[0;34m<\033[0;33m Actualizar KEY"
 echo -e "\033[0;35m[\033[0;36m10\033[0;35m] \033[0;34m<\033[0;33m BOT DE TELEGRAM $PID_BGEN1\033[0m"
 #echo -e "\033[0;35m[\033[0;36m11\033[0;35m] \033[0;34m<\033[0;33m KEY FIJA con IP + BotGen"
