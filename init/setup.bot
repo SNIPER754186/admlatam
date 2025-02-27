@@ -318,9 +318,9 @@ clear
 msg -bar3
 echo -e "\033[1;33mDescargando archivos... ESPERE "
 msg -bar3
-wget -q --no-check-certificate -O $HOME/files.tar https://github.com/SNIPER754186/admlatam/raw/refs/heads/main/BOTFILESTAR/file.tar
+wget -q --no-check-certificate -O $HOME/SCRIPT.zip https://github.com/SNIPER754186/admlatam/raw/refs/heads/main//BOTFILESTAR/file/SCRIPT.zip
 [[ -d $HOME/update ]] && rm -rf $HOME/update/* || mkdir $HOME/update
-[[ -e $HOME/files.tar ]] && tar xpf $HOME/files.tar -C $HOME/update && rm -f $HOME/files.tar
+[[ -e $HOME/SCRIPT.zip ]] && unzip -q $HOME/SCRIPT.zip -d $HOME/update && rm -f $HOME/SCRIPT.zip
 echo 999 > ${CIDdir}/limit
 n=1
 for arqx in `ls $HOME/update`; do
@@ -329,13 +329,13 @@ echo -ne "\033[1;33mFichero \033[1;31m[${arqx}.bot] "
 [[ -e $HOME/update/$arqx ]] && veryfy_fun $arqx
 n=$(($n + 1))
 done
-cd $HOME && rm -rf $HOME/update && rm -f $HOME/files.tar
+cd $HOME && rm -rf $HOME/update && rm -f $HOME/SCRIPT.zip
 local ruta_origen="/root/resBOT"
 local ruta_destino="/etc/ADM-db"
 [[ -d ${ruta_origen} ]] && {
 for archivo in "$ruta_origen"/*; do
     if [[ -f "$archivo" ]]; then
-		mv "$archivo" "$ruta_destino/"
+        mv "$archivo" "$ruta_destino/"
         #echo " RESTAURANDO $archivo A $ruta_destino."
     fi
 done
