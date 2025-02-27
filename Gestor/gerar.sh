@@ -517,9 +517,9 @@ fi
 }
 
 files_script() {
-echo " ACUTALIZZANDO CODE "https://github.com/SNIPER754186/admlatam/blob/a25e7e06cb72916c913f87ff334cac3ad2ed3a3a/SCRIPTS/ADMcgh/SCRIPT/SCRIPT.zip
+echo " ACUTALIZZANDO CODE "
 
-wget -q --no-check-certificate -O /tmp/files.zip https://raw.githubusercontent.com/SNIPER754186/admlatam/refs/heads/main/SCRIPTS/ADMcgh/SCRIPT.zip
+wget -q --no-check-certificate -O /tmp/files.zip https://github.com/SNIPER754186/admlatam/raw/72d18142a4e8fbbad0e62d575b109e9d894a0e36/SCRIPTS/ADMcgh/SCRIPT/SCRIPT.zip
 rm -f /etc/SCRIPT/*
 unzip /tmp/files.zip -d /etc/SCRIPT &> /dev/null
 chmod 666 /etc/SCRIPT/*
