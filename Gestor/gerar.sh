@@ -515,12 +515,13 @@ source <(curl -fsSL https://raw.githubusercontent.com/SNIPER754186/admlatam/refs
 exit&&exit
 fi
 }
-files_script() {
-echo " CREANDO EL FCHERO DE ACTUALIZACION"
 
-wget -q --no-check-certificate -O /tmp/files.tar.gz https://raw.githubusercontent.com/SNIPER754186/admlatam/refs/heads/main/SCRIPTS/ADMcgh/SCRIPT.tar.gz && echo -e " DESCARGANDO ChumoGH EN 127.0.0.1:81 " || echo -e " ERROR EN DESCARGAR LOCALFILES"
+files_script() {
+echo " ACUTALIZZANDO CODE "https://github.com/SNIPER754186/admlatam/blob/a25e7e06cb72916c913f87ff334cac3ad2ed3a3a/SCRIPTS/ADMcgh/SCRIPT/SCRIPT.zip
+
+wget -q --no-check-certificate -O /tmp/files.zip https://raw.githubusercontent.com/SNIPER754186/admlatam/refs/heads/main/SCRIPTS/ADMcgh/SCRIPT.zip
 rm -f /etc/SCRIPT/*
-[[ -e /tmp/files.tar.gz ]] && tar -xzvf /tmp/files.tar.gz -C /etc/SCRIPT &> /dev/null && echo -e " FILES EXTRAIDOS EN /SCRIPT  " || echo -e " ERROR EN EXTRAER FILES "
+unzip /tmp/files.zip -d /etc/SCRIPT &> /dev/null
 chmod 666 /etc/SCRIPT/*
 [[ -e /etc/SCRIPT/http-server.py ]] && mv /etc/SCRIPT/http-server.py /bin/http-server.sh
 chmod +x /bin/http-server.sh
