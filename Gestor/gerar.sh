@@ -270,6 +270,8 @@ echo -e "-------------------------------------------------"
 
 
 ofus () {
+unset server
+server=$(echo ${txt_ofuscatw}|cut -d':' -f1)
 unset txtofus
 number=$(expr length $1)
 for((i=1; i<$number+1; i++)); do

@@ -388,7 +388,7 @@ echo "$nombrevalue" > ${DIR}/${KEY}.name
 echo "$nombrevalue" >> /etc/ADM-db/LTM-key.cont
 at now +1 hours <<< "rm -rf ${DIR}/${KEY} && rm -f ${DIR}/${KEY}.name"
 }
-
+#NO SE TOCO NADAD
 ofus () {
 unset server
 server=$(echo ${txt_ofuscatw}|cut -d':' -f1)

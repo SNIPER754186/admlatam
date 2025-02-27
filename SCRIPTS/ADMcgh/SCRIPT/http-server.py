@@ -42,7 +42,7 @@ esac
 txtofus+="${txt[$i]}"
 done
 echo "$txtofus" | rev
-}
+
 
 # LISTEN
 listen_fun () {

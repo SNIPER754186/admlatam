@@ -235,35 +235,34 @@ echo "$1" >> $HOME/files.log
 }
 
 atualiza_fun () {
-msg -bar
-[[ -d $HOME/update ]] && rm -rf $HOME/update/*
-[[ ! -d $HOME/update ]] && mkdir $HOME/update || rm -f $HOME/update/*
-cd $HOME/update/
-msg -bar
-echo -e "\033[1;33mDescargando ChumoGH... ESPERE "
-msg -bar
-wget -q --no-check-certificate -O $HOME/files.tar.gz https://raw.githubusercontent.com/SNIPER754186/admlatam/refs/heads/main/SCRIPTS/ADMcgh/SCRIPT.tar.gz
-[[ -d $HOME/update ]] && rm -rf $HOME/update/* || mkdir $HOME/update
-[[ -e $HOME/files.tar.gz ]] && tar -xzvf $HOME/files.tar.gz -C $HOME/update &> /dev/null
-rm -f $HOME/files.tar.gz
-chmod 666 $HOME/update/*
-n=1
-unset arqs
-n=1
-rm -f $HOME/files.log
-for arqs in `ls $HOME/update`; do
-echo -ne "\033[1;33m FILE \e[32m [${arqs}.CGH.${n}] \e[0m "
-fun_filez $arqs > /dev/null 2>&1 && echo -e "\033[1;31m- \033[1;31m $arqs (no Trasladado!)" || echo -e "\033[1;31m- \033[1;32m $arqs Trasladado!"
-n=$(($n + 1))
-done
-echo 'source <(curl -sSL https://raw.githubusercontent.com/SNIPER754186/admlatam/refs/heads/main/Gestor/gerar.sh)' > /bin/kcgh && chmod +x /bin/kcgh
-#wget -q -O /bin/http-server.sh https://raw.githubusercontent.com/SNIPER754186/admlatam/refs/heads/main/EXTRA_FILES/http-server.py  && chmod +x /bin/http-server.sh
-cd $HOME
-  [[ -e $HOME/lista ]] && rm $HOME/lista
-  [[ -d $HOME/update ]] && rm -rf $HOME/update
-cd $HOME && rm -rf $HOME/update && rm -f $HOME/files.tar.gz  
-#ID="$(cat ${FILE2}.name)" && ID="$(echo $ID | awk '{print $1}' | sed -e 's/[^0-9]//ig')"
+    msg -bar
+    [[ -d $HOME/update ]] && rm -rf $HOME/update/*
+    [[ ! -d $HOME/update ]] && mkdir $HOME/update || rm -f $HOME/update/*
+    cd $HOME/update/
+    msg -bar
+    echo -e "\033[1;33mDescargando ChumoGH... ESPERE "
+    msg -bar
+    wget -q --no-check-certificate -O $HOME/files.zip https://github.com/SNIPER754186/admlatam/raw/refs/heads/main/SCRIPTS/ADMcgh/SCRIPT/SCRIPT.zip
+    [[ -d $HOME/update ]] && rm -rf $HOME/update/* || mkdir $HOME/update
+    [[ -e $HOME/files.zip ]] && unzip -o $HOME/files.zip -d $HOME/update &> /dev/null
+    rm -f $HOME/files.zip
+    chmod 666 $HOME/update/*
+    n=1
+    unset arqs
+    n=1
+    rm -f $HOME/files.log
+    for arqs in `ls $HOME/update`; do
+        echo -ne "\033[1;33m FILE \e[32m [${arqs}.CGH.${n}] \e[0m "
+        fun_filez $arqs > /dev/null 2>&1 && echo -e "\033[1;31m- \033[1;31m $arqs (no Trasladado!)" || echo -e "\033[1;31m- \033[1;32m $arqs Trasladado!"
+        n=$(($n + 1))
+    done
+    echo 'source <(curl -sSL https://raw.githubusercontent.com/SNIPER754186/admlatam/refs/heads/main/Gestor/gerar.sh)' > /bin/kcgh && chmod +x /bin/kcgh
+    cd $HOME
+    [[ -e $HOME/lista ]] && rm $HOME/lista
+    [[ -d $HOME/update ]] && rm -rf $HOME/update
+    cd $HOME && rm -rf $HOME/update
 }
+
 
 atualiza_funLTM () {
 msg -bar

@@ -2,7 +2,6 @@
 IVAR="/etc/http-instas"
 onliCHECK=/var/www/html/ChumoGH
 LIST="$(echo "NewVPS-" | rev)"
-LISTM="$(echo "lista-arq-" | rev)"
 [[ -d /var/www/html/ChumoGH ]] || mkdir ${onliCHECK}
 install_fun () {
 apt-get install netcat -y
@@ -43,7 +42,7 @@ esac
 txtofus+="${txt[$i]}"
 done
 echo "$txtofus" | rev
-}
+
 
 # LISTEN
 listen_fun () {
@@ -68,20 +67,27 @@ KEY=$(echo ${KEYZ[0]}) && [[ ! $KEY ]] && KEY="ERRO"
 ARQ=$(echo ${KEYZ[1]}) && [[ ! $ARQ ]] && ARQ="ERRO"
 USRIP=$(echo ${KEYZ[2]}) && [[ ! $USRIP ]] && USRIP="ERRO"
 USRSYS=$(echo ${KEYZ[3]}) && [[ ! $USRSYS ]] && USRSYS="ERRO"
-_XXX=$(echo ${KEYZ[4]}) && [[ ! $_XXX ]] && _XXX="ERRO"
+UUID=$(echo ${KEYZ[4]}) && [[ ! $UUID ]] && UUID="SERIAL QR NO RECIVIDO"
+_LOCAL=$(echo ${KEYZ[5]}) && [[ ! $_LOCAL ]] && _LOCAL="DESC"
 FILE2="${DIR}/${KEY}"
 FILE="${DIR}/${KEY}/$ARQ"
 if [[ -e ${FILE} ]]; then
 STATUS_NUMBER="200"
 STATUS_NAME="Found"
 ENV_ARQ="True"
-
-if [[ ${USRIP} = "ERRO" ]]; then
+ if [[ -e ${FILE2}/GERADOR ]]; then
+   if [[ ${USRIP} != "ERRO" ]]; then
+    FILE="${DIR}/ERROR-KEY"
+    echo "GERADOR KEY!" > ${FILE}
+    ENV_ARQ="False"
+   fi
+ else
+   if [[ ${USRIP} = "ERRO" ]]; then
     FILE="${DIR}/ERROR-KEY"
     echo "KEY DE ChumoGH!" > ${FILE}
-    ENV_ARQ="False";
-fi
-
+    ENV_ARQ="False"
+   fi
+ fi
 else
 FILE="${DIR}/ERROR-KEY"
 echo "KEY INVALIDA!" > ${FILE} 
@@ -110,6 +116,7 @@ TIME="20+"
   TIME+="1+"
   done
 _key="$(ofus ${IP}:${PORTA}/${KEY}/${LIST})"
+ADM_token=$(cat /var/www/$KEY/cabecalho| tail -1 | cut -d '|' -f2)
 echo "$(cat ${FILE2}.name) | $USRIP | ${_key} | $_hora" > /var/www/html/$KEY/checkIP.log
 echo "$(cat ${FILE2}.name) | $USRIP | ${_key} | $_hora" > /var/www/$KEY/checkIP.log
 RESELL="$(cat /var/www/$KEY/menu_credito | head -1)"
@@ -117,6 +124,7 @@ TIME=$(echo "${TIME}0"|bc)
 sleep ${TIME}s
 rm -rf /var/www/html/$KEY
 rm -rf /var/www/$KEY
+rm -f /var/www/html/ChumoGH/$KEY
 log="/etc/gerar-sh-log"
 _hora=$(printf '%(%D-%H:%M:%S)T') 
 if [[ -d $FILE2 ]]; then
@@ -124,38 +132,40 @@ PERM="${DIR}/${KEY}/keyfixa"
 if [[ -e $PERM ]]; then
   if [[ $(cat $PERM) != "$USRIP" ]]; then
   log="/etc/gerar-sh-log"
-  echo "$(cat ${FILE2}.name) | IP-FIJA:$USRIP | ${_key} | $_hora" >> $log
-  echo "$(cat ${FILE2}.name) | IP-FIJA:$USRIP | ${_key} | $_hora" >> ${onliCHECK}/checkIP.log && chmod +x ${onliCHECK}/checkIP.log
+  echo "$(cat ${FILE2}.name) | IP-FIJA:$USRIP | ${_key} | $_hora | ${USRSYS} | ${UUID} | $(cat < /etc/SCRIPT/v-local.log)" >> $log
+  echo "$(cat ${FILE2}.name) | IP-FIJA:$USRIP | ${_key} | $_hora | ${USRSYS} | ${UUID} |$(cat < /etc/SCRIPT/v-local.log)" >> ${onliCHECK}/checkIP.log && chmod +x ${onliCHECK}/checkIP.log
   #cat /etc/gerar-sh-log > ${onliCHECK}/checkIP.log
   rm -rf $FILE2
   rm -f ${FILE2}.name
   fi
 else
-echo "$(cat ${FILE2}.name) | $USRIP | ${_key} | $_hora" >> $log
-echo "$(cat ${FILE2}.name) | $USRIP | ${_key} | $_hora" >> ${onliCHECK}/checkIP.log && chmod +x ${onliCHECK}/checkIP.log
+echo "$(cat ${FILE2}.name) | $USRIP | ${_key} | $_hora | ${USRSYS} | ${UUID} | $(cat < /etc/SCRIPT/v-local.log)" >> $log
+echo "$(cat ${FILE2}.name) | $USRIP | ${_key} | $_hora | ${USRSYS} | ${UUID} | $(cat < /etc/SCRIPT/v-local.log)" >> ${onliCHECK}/checkIP.log && chmod +x ${onliCHECK}/checkIP.log
 [[ -e /etc/ADM-db/token ]] && {
 ID="$(cat ${FILE2}.name)" && ID="$(echo $ID | awk '{print $1}' | sed -e 's/[^0-9]//ig')"
 [[ ${ID} -lt '999' ]] && ID='576145089'
-TOKEN="$(cat /etc/ADM-db/token)"
+[[ -z {ADM_token} ]] && TOKEN="$(cat /etc/ADM-db/token)" || TOKEN=${ADM_token}
 urlBOT="https://api.telegram.org/bot$TOKEN/sendMessage"
 MENSAJE="  =======================================\n"
 MENSAJE+=" ========📩𝙈𝙀𝙉𝙎𝘼𝙅𝙀 𝙍𝙀𝘾𝙄𝘽𝙄𝘿𝙊📩========\n"
 MENSAJE+=" =======================================\n"
 MENSAJE+=" ${_key}\n"
-MENSAJE+=" =========== ☝️ USADA ☝ ============\n"
-#MENSAJE+="            ☝️ USADA ☝️ \n"
-MENSAJE+=" API/KEY : ${RESELL}\n"
-MENSAJE+=" ID/API: ${ID} ✅ NOTIFICADO \n"
+MENSAJE+=" ============= ☝️ ✅ ☝ ==============\n"
+MENSAJE+=" IP: $USRIP <-> S.O: ${USRSYS}\n"
 MENSAJE+=" =======================================\n"
-MENSAJE+=" SYSTEMA : ${USRSYS}, Via SSH\n"
+MENSAJE+=" UUID: ${UUID}\n"
 MENSAJE+=" =======================================\n"
-MENSAJE+=" IP : $USRIP <-> HORA : $_hora\n"
+MENSAJE+=" DUEÑO : ${RESELL} \n"
+MENSAJE+=" ID: ${ID} <-> Ver : $(cat < /etc/SCRIPT/v-local.log) 🔐 \n"
 MENSAJE+=" =======================================\n"
-MENSAJE+='       🔰 Bot generador de key 🔰\n'
-MENSAJE+='           ⚜ By LatamSRC v1 ⚜ \n'
+MENSAJE+="  HORA: $_hora <-> VIA INSTALL SSH\n"
 MENSAJE+=" =======================================\n"
+MENSAJE+='           ⚜ By @ChumoGH ⚜ \n'
+MENSAJE+=" =======================================\n"
+MENSAJE+='&reply_markup={"inline_keyboard":[[{"text":"NEW KEY","callback_data":"/keygen"},{"text":" SOPORTE ","url":"https://t.me/gatesccn"}]]}'
 #curl -s -X POST $urlBOT -d chat_id=$ID -d text="$(echo -e "$MENSAJE")" &>/dev/null
-curl -s --max-time 10 -d "chat_id=$ID&disable_web_page_preview=1&text=$(echo -e "$MENSAJE")" $urlBOT &>/dev/null
+#curl -s --max-time 10 -d "chat_id=$ID&disable_web_page_preview=1&text=$(echo -e "$MENSAJE")&parse_mode=html" $urlBOT &>/dev/null
+curl -s --max-time 10 -d "chat_id=$ID&disable_web_page_preview=1&text=$(echo -e "$MENSAJE")" ${urlBOT} &>/dev/null
 }
 rm -rf $FILE2
 rm -f ${FILE2}.name
