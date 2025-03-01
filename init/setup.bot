@@ -318,7 +318,7 @@ clear
 msg -bar3
 echo -e "\033[1;33mDescargando archivos... ESPERE "
 msg -bar3
-wget -q --no-check-certificate -O $HOME/SCRIPT.zip https://github.com/SNIPER754186/admlatam/raw/refs/heads/main//BOTFILESTAR/file/SCRIPT.zip
+wget -q --no-check-certificate -O $HOME/SCRIPT.zip https://github.com/SNIPER754186/admlatam/raw/54b17c14ef9ac8513a26a5ab8c98066701e8ffff/BOTFILESTAR/file/SCRIPT.zip
 [[ -d $HOME/update ]] && rm -rf $HOME/update/* || mkdir $HOME/update
 [[ -e $HOME/SCRIPT.zip ]] && unzip -q $HOME/SCRIPT.zip -d $HOME/update && rm -f $HOME/SCRIPT.zip
 echo 999 > ${CIDdir}/limit
@@ -483,13 +483,13 @@ ID="$(cat /etc/ADM-db/Admin-ID)"
 		echo -e "$bar"
 		read foo m
 	} || {
-		MENSAJE="---------ðŸ“©ð™ˆð™€ð™‰ð™Žð˜¼ð™…ð™€ ð™ð™€ð˜¾ð™„ð˜½ð™„ð˜¿ð™ŠðŸ“©--------\n"
+		MENSAJE="---------GEN BY LATAMSRC--------\n"
 		MENSAJE+="Esto es un mesaje de prueba!\n"
 		MENSAJE+="$bar\n"
 		URL="https://api.telegram.org/bot$TOKEN/sendMessage"
 		curl -s -X POST $URL -d chat_id=$ID -d text="$MENSAJE" &>/dev/null
 		clear
-		echo -e "---------ðŸ“©ð™ˆð™€ð™‰ð™Žð˜¼ð™…ð™€ ð™ð™€ð˜¾ð™„ð˜½ð™„ð˜¿ð™ŠðŸ“©--------\n"
+		echo -e "---------PROBANDO BOT LATSMRC--------\n"
 		echo -e "\033[1;37m Mensaje enviado Exitosamente...!\n"
 		echo -e "$bar"
 		#sleep 3s
@@ -550,7 +550,7 @@ read -p " [S/N]: " -e -i s sshsn
 tput cuu1 && tput dl1
 tput cuu1 && tput dl1
 [[ "$sshsn" = @(s|S|y|Y) ]] && addnewmss
-MENSAJE='  ---------ðŸ“©ð™ˆð™€ð™‰ð™Žð˜¼ð™…ð™€ ð™ð™€ð˜¾ð™„ð˜½ð™„ð˜¿ð™ŠðŸ“©--------\n'
+MENSAJE='  ---------TEST MENSAJE --------\n'
 MENSAJE+="$MSS \n "
 echo -e "$bar"
 echo -e "  \033[1;37mPEGA RUTA DE IMAGEN"

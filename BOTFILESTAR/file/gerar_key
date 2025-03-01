@@ -143,39 +143,39 @@ MSG_id=$((${message_message_id} + 1 ))
 [[ -z ${nombrevalue} ]] && nombrevalue="${message_from_id}" 
 [[ -z ${nombrevalue} ]] && nombrevalue="${callback_query_from_id}"
 [[ -z ${callback_query_from_username} ]] && usrLOP=${message_from_username} || usrLOP=${callback_query_from_username}
-#[[ $(cat /etc/ADM-db/User-ID | grep -w ${nombrevalue} | cut -d '|' -f3) = "true" ]] && gerar_key2 || 
+[[ $(cat /etc/ADM-db/User-ID | grep -w ${nombrevalue} | cut -d '|' -f3) = "true" ]] && gerar_key2 || 
 gerar_key2 
-				#[[ -e $HOME/RegBOT/${nombrevalue}.permited ]] && gerar_key2 || {
-				#MSG_id=$((${message_message_id} + 1 ))
-				#local bot_retorno="\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ \n"
-				#bot_retorno+="ㅤVERIFICANDO MEMBRESIA !!\n\n  PORFAVOR ESPERA MIENTRAS SE VALIDA!! \n" 
-				#bot_retorno+="\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ \n"
-				#msj_fun
-				#sleep 1s
-				#msj_del ${message_message_id}
-				#msj_del ${MSG_id}
-				#MSG_id=$((${message_message_id} + 1 ))
-				#local bot_retorno="\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ \n"
-				#bot_retorno+="ㅤFELICIDADES !! UD TIENE AUTORIZACION EXTRA\n\n VUELVE  UTILIZAR EL COMANDO LIBREMENTE\n" 
-				#bot_retorno+="\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ \n"
-				#msj_fun
-				#sleep 1s
-				#msj_del ${message_message_id}
-				#msj_del ${MSG_id}
-				#echo "${nombrevalue}" > $HOME/RegBOT/${nombrevalue}.permited
-				#return
-				#}
-			#} || {
-			#	local bot_retorno="ㅤESTA FUNCION FUE REMIVIDA\n\n"  #--------------------------------------------------------------------------------------
-				#bot_retorno+=" ESTA FUNCION ESTA LIMITADA \n\n"
-				#bot_retorno+="❗️ PARA GENERAR ESTAS KEYS ❗️\n\n"
-				#bot_retorno+="⚙️ SOLICITA DUAL GEN LIMITE\n\n"
-				#msj_fun
-				#sleep 5s
-				#msj_del ${message_message_id}
-				#msj_del ${MSG_id}
-			#}
-	#} || gerar_key2
+				[[ -e $HOME/RegBOT/${nombrevalue}.permited ]] && gerar_key2 || {
+				MSG_id=$((${message_message_id} + 1 ))
+				local bot_retorno="\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ \n"
+				bot_retorno+="ㅤVERIFICANDO MEMBRESIA !!\n\n  PORFAVOR ESPERA MIENTRAS SE VALIDA!! \n" 
+				bot_retorno+="\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ \n"
+				msj_fun
+				sleep 1s
+				msj_del ${message_message_id}
+				msj_del ${MSG_id}
+				MSG_id=$((${message_message_id} + 1 ))
+				local bot_retorno="\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ \n"
+				bot_retorno+="ㅤFELICIDADES !! UD TIENE AUTORIZACION EXTRA\n\n VUELVE  UTILIZAR EL COMANDO LIBREMENTE\n" 
+				bot_retorno+="\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ \n"
+				msj_fun
+				sleep 1s
+				msj_del ${message_message_id}
+				msj_del ${MSG_id}
+				echo "${nombrevalue}" > $HOME/RegBOT/${nombrevalue}.permited
+				return
+				}
+			} || {
+				local bot_retorno="ㅤESTA FUNCION FUE REMIVIDA\n\n"  #--------------------------------------------------------------------------------------
+				bot_retorno+=" ESTA FUNCION ESTA LIMITADA \n\n"
+				bot_retorno+="❗️ PARA GENERAR ESTAS KEYS ❗️\n\n"
+				bot_retorno+="⚙️ SOLICITA DUAL GEN LIMITE\n\n"
+				msj_fun
+				sleep 5s
+				msj_del ${message_message_id}
+				msj_del ${MSG_id}
+			}
+	} || gerar_key2
 }
 
 gerar_key2 () {
@@ -192,7 +192,7 @@ numkey_gen=$(grep -o -i $nombrevalue /etc/ADM-db/LTM-key.cont | wc -l)
 			MSG_id=$((${message_message_id} + 1 ))
 			local bot_retorno="ㅤUD ALCANZO SU LIMITE DE KEYS DUAL\n"  #--------------------------------------------------------------------------------------
 			bot_retorno+=" ESTA FUNCION ESTA LIMITADA A ${credres} \n\n"
-			#bot_retorno+=" 🚫 OOOH!, @${callback_query_from_username} con ID:$nombrevalue ‼️\n Tus Creditos se han Agotado \n"
+			bot_retorno+=" 🚫 OOOH!, @${callback_query_from_username} con ID:$nombrevalue ‼️\n Tus Creditos se han Agotado \n"
 			bot_retorno+="  TUS CREDITOS PERMITIDOS :『 ${limcont} 』, 𝙆𝙚𝙮𝙨 𝙂𝙚𝙣𝙚𝙧𝙖𝙙𝙖𝙨『 $numkey_gen 』🗝️\n"
 			bot_retorno+="$LINE\n"
 			bot_retorno+=" ❗️ PARA GENERAR ESTAS KEYS ❗️\n"
@@ -223,7 +223,7 @@ bot_retorno+=" INSTALADOR MOD LATAM (2.0)  \n\n"
 bot_retorno+='<code>wget -q https://raw.githubusercontent.com/SNIPER754186/admlatam/refs/heads/main/EXTRA_FILES/GPT/setup; chmod 777 setup; ./setup --start</code>\n\n'
 bot_retorno+="🔑 Key: (Valida por solo 1 hora) \n\n"
 bot_retorno+=" <code>${keyfinal}</code> \n\n"
-#bot_retorno+=" <code>KEY REMOVIDAS DURANTE EL UPDATE</code> \n\n"
+bot_retorno+=" <code>KEY REMOVIDAS DURANTE EL UPDATE</code> \n\n"
 bot_retorno+="👀 Key Generadas en 24hrs: [ ${credres}/${limted} ] \n\n"
 bot_retorno+="📀 Ubuntu: 20.04 LTS ¡Recomendado! \n\n"
 bot_retorno+="ㅤㅤ• 💥 ─━─━─━─━─━─━─━─━─━─━─ 💥 •ㅤ\n  🪦 ADQUIERE TU ACCESO DESDE @${nBot} 🛡️⚔️\n"
